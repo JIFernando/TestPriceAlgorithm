@@ -1,4 +1,6 @@
-﻿namespace TestPriceAlgorithm
+﻿using System;
+
+namespace TestPriceAlgorithm
 {
     partial class FormTestAlgorithm
     {
@@ -30,20 +32,24 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormTestAlgorithm));
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.btnImportCsv = new System.Windows.Forms.Button();
             this.csvFileName = new System.Windows.Forms.TextBox();
             this.singleValue = new System.Windows.Forms.Button();
             this.buttonExport = new System.Windows.Forms.Button();
             this.buttonGraph = new System.Windows.Forms.Button();
             this.labelBasePrice = new System.Windows.Forms.Label();
-            this.textBoxBasePrice = new System.Windows.Forms.TextBox();
+            this.txtBasePrice = new System.Windows.Forms.TextBox();
             this.labelMaxPrice = new System.Windows.Forms.Label();
-            this.textBoxMaxPrice = new System.Windows.Forms.TextBox();
-            this.textBoxMinPrice = new System.Windows.Forms.TextBox();
+            this.txtMaxPrice = new System.Windows.Forms.TextBox();
+            this.txtMinPrice = new System.Windows.Forms.TextBox();
             this.labelMinPrice = new System.Windows.Forms.Label();
-            this.textBoxChangeAmount = new System.Windows.Forms.TextBox();
+            this.txtChangeAmount = new System.Windows.Forms.TextBox();
             this.labelChangeAmount = new System.Windows.Forms.Label();
-            this.textBoxPeriod = new System.Windows.Forms.TextBox();
+            this.txtPeriod = new System.Windows.Forms.TextBox();
             this.labelPeriod = new System.Windows.Forms.Label();
             this.bindingNavigator1 = new System.Windows.Forms.BindingNavigator(this.components);
             this.bindingNavigatorAddNewItem = new System.Windows.Forms.ToolStripButton();
@@ -57,7 +63,7 @@
             this.bindingNavigatorMoveNextItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorMoveLastItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.comboBoxPeriodType = new System.Windows.Forms.ComboBox();
+            this.cbPeriodType = new System.Windows.Forms.ComboBox();
             this.groupBoxAlgorithmConf = new System.Windows.Forms.GroupBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.groupBoxRealData = new System.Windows.Forms.GroupBox();
@@ -71,14 +77,27 @@
             this.labelExtraPeriod = new System.Windows.Forms.Label();
             this.textBoxExtraChangePercentage = new System.Windows.Forms.TextBox();
             this.labelExtraChangePercentage = new System.Windows.Forms.Label();
-            this.textBoxSingleValue = new System.Windows.Forms.TextBox();
+            this.txtSingleValue = new System.Windows.Forms.TextBox();
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
+            this.periodDataBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txtBenefitsReal = new System.Windows.Forms.TextBox();
+            this.txtBenefitAlg = new System.Windows.Forms.TextBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.CalculateBenefits = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).BeginInit();
             this.bindingNavigator1.SuspendLayout();
             this.groupBoxAlgorithmConf.SuspendLayout();
             this.groupBoxRealData.SuspendLayout();
             this.groupBoxExtraConf.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.periodDataBindingSource)).BeginInit();
+            this.groupBox1.SuspendLayout();
+            this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.SuspendLayout();
             // 
             // btnImportCsv
@@ -139,12 +158,12 @@
             this.labelBasePrice.TabIndex = 5;
             this.labelBasePrice.Text = "Product Price:";
             // 
-            // textBoxBasePrice
+            // txtBasePrice
             // 
-            this.textBoxBasePrice.Location = new System.Drawing.Point(146, 22);
-            this.textBoxBasePrice.Name = "textBoxBasePrice";
-            this.textBoxBasePrice.Size = new System.Drawing.Size(279, 20);
-            this.textBoxBasePrice.TabIndex = 6;
+            this.txtBasePrice.Location = new System.Drawing.Point(146, 22);
+            this.txtBasePrice.Name = "txtBasePrice";
+            this.txtBasePrice.Size = new System.Drawing.Size(279, 20);
+            this.txtBasePrice.TabIndex = 6;
             // 
             // labelMaxPrice
             // 
@@ -155,19 +174,19 @@
             this.labelMaxPrice.TabIndex = 7;
             this.labelMaxPrice.Text = "Product Max Price:";
             // 
-            // textBoxMaxPrice
+            // txtMaxPrice
             // 
-            this.textBoxMaxPrice.Location = new System.Drawing.Point(146, 48);
-            this.textBoxMaxPrice.Name = "textBoxMaxPrice";
-            this.textBoxMaxPrice.Size = new System.Drawing.Size(279, 20);
-            this.textBoxMaxPrice.TabIndex = 8;
+            this.txtMaxPrice.Location = new System.Drawing.Point(146, 48);
+            this.txtMaxPrice.Name = "txtMaxPrice";
+            this.txtMaxPrice.Size = new System.Drawing.Size(279, 20);
+            this.txtMaxPrice.TabIndex = 8;
             // 
-            // textBoxMinPrice
+            // txtMinPrice
             // 
-            this.textBoxMinPrice.Location = new System.Drawing.Point(146, 74);
-            this.textBoxMinPrice.Name = "textBoxMinPrice";
-            this.textBoxMinPrice.Size = new System.Drawing.Size(279, 20);
-            this.textBoxMinPrice.TabIndex = 10;
+            this.txtMinPrice.Location = new System.Drawing.Point(146, 74);
+            this.txtMinPrice.Name = "txtMinPrice";
+            this.txtMinPrice.Size = new System.Drawing.Size(279, 20);
+            this.txtMinPrice.TabIndex = 10;
             // 
             // labelMinPrice
             // 
@@ -178,12 +197,12 @@
             this.labelMinPrice.TabIndex = 9;
             this.labelMinPrice.Text = "Product Min Price:";
             // 
-            // textBoxChangeAmount
+            // txtChangeAmount
             // 
-            this.textBoxChangeAmount.Location = new System.Drawing.Point(146, 100);
-            this.textBoxChangeAmount.Name = "textBoxChangeAmount";
-            this.textBoxChangeAmount.Size = new System.Drawing.Size(279, 20);
-            this.textBoxChangeAmount.TabIndex = 12;
+            this.txtChangeAmount.Location = new System.Drawing.Point(146, 100);
+            this.txtChangeAmount.Name = "txtChangeAmount";
+            this.txtChangeAmount.Size = new System.Drawing.Size(279, 20);
+            this.txtChangeAmount.TabIndex = 12;
             // 
             // labelChangeAmount
             // 
@@ -194,12 +213,12 @@
             this.labelChangeAmount.TabIndex = 11;
             this.labelChangeAmount.Text = "Change Amount";
             // 
-            // textBoxPeriod
+            // txtPeriod
             // 
-            this.textBoxPeriod.Location = new System.Drawing.Point(146, 126);
-            this.textBoxPeriod.Name = "textBoxPeriod";
-            this.textBoxPeriod.Size = new System.Drawing.Size(52, 20);
-            this.textBoxPeriod.TabIndex = 14;
+            this.txtPeriod.Location = new System.Drawing.Point(146, 126);
+            this.txtPeriod.Name = "txtPeriod";
+            this.txtPeriod.Size = new System.Drawing.Size(52, 20);
+            this.txtPeriod.TabIndex = 14;
             // 
             // labelPeriod
             // 
@@ -234,7 +253,7 @@
             this.bindingNavigator1.MovePreviousItem = this.bindingNavigatorMovePreviousItem;
             this.bindingNavigator1.Name = "bindingNavigator1";
             this.bindingNavigator1.PositionItem = this.bindingNavigatorPositionItem;
-            this.bindingNavigator1.Size = new System.Drawing.Size(1112, 25);
+            this.bindingNavigator1.Size = new System.Drawing.Size(1135, 25);
             this.bindingNavigator1.TabIndex = 15;
             this.bindingNavigator1.Text = "bindingNavigator1";
             // 
@@ -323,32 +342,26 @@
             this.bindingNavigatorSeparator2.Name = "bindingNavigatorSeparator2";
             this.bindingNavigatorSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
-            // comboBoxPeriodType
+            // cbPeriodType
             // 
-            this.comboBoxPeriodType.FormattingEnabled = true;
-            this.comboBoxPeriodType.Items.AddRange(new object[] {
-            "Seconds",
-            "Minutes",
-            "Hours",
-            "Days",
-            "Months"});
-            this.comboBoxPeriodType.Location = new System.Drawing.Point(204, 125);
-            this.comboBoxPeriodType.Name = "comboBoxPeriodType";
-            this.comboBoxPeriodType.Size = new System.Drawing.Size(121, 21);
-            this.comboBoxPeriodType.TabIndex = 16;
+            this.cbPeriodType.FormattingEnabled = true;
+            this.cbPeriodType.Location = new System.Drawing.Point(204, 125);
+            this.cbPeriodType.Name = "cbPeriodType";
+            this.cbPeriodType.Size = new System.Drawing.Size(121, 21);
+            this.cbPeriodType.TabIndex = 16;
             // 
             // groupBoxAlgorithmConf
             // 
             this.groupBoxAlgorithmConf.Controls.Add(this.checkBox1);
-            this.groupBoxAlgorithmConf.Controls.Add(this.textBoxMinPrice);
-            this.groupBoxAlgorithmConf.Controls.Add(this.comboBoxPeriodType);
+            this.groupBoxAlgorithmConf.Controls.Add(this.txtMinPrice);
+            this.groupBoxAlgorithmConf.Controls.Add(this.cbPeriodType);
             this.groupBoxAlgorithmConf.Controls.Add(this.labelBasePrice);
-            this.groupBoxAlgorithmConf.Controls.Add(this.textBoxBasePrice);
-            this.groupBoxAlgorithmConf.Controls.Add(this.textBoxPeriod);
+            this.groupBoxAlgorithmConf.Controls.Add(this.txtBasePrice);
+            this.groupBoxAlgorithmConf.Controls.Add(this.txtPeriod);
             this.groupBoxAlgorithmConf.Controls.Add(this.labelMaxPrice);
             this.groupBoxAlgorithmConf.Controls.Add(this.labelPeriod);
-            this.groupBoxAlgorithmConf.Controls.Add(this.textBoxMaxPrice);
-            this.groupBoxAlgorithmConf.Controls.Add(this.textBoxChangeAmount);
+            this.groupBoxAlgorithmConf.Controls.Add(this.txtMaxPrice);
+            this.groupBoxAlgorithmConf.Controls.Add(this.txtChangeAmount);
             this.groupBoxAlgorithmConf.Controls.Add(this.labelMinPrice);
             this.groupBoxAlgorithmConf.Controls.Add(this.labelChangeAmount);
             this.groupBoxAlgorithmConf.Location = new System.Drawing.Point(30, 194);
@@ -376,7 +389,7 @@
             this.groupBoxRealData.Controls.Add(this.csvFileName);
             this.groupBoxRealData.Location = new System.Drawing.Point(30, 56);
             this.groupBoxRealData.Name = "groupBoxRealData";
-            this.groupBoxRealData.Size = new System.Drawing.Size(957, 97);
+            this.groupBoxRealData.Size = new System.Drawing.Size(452, 97);
             this.groupBoxRealData.TabIndex = 18;
             this.groupBoxRealData.TabStop = false;
             this.groupBoxRealData.Text = "Real Data";
@@ -401,9 +414,9 @@
             this.groupBoxExtraConf.Controls.Add(this.labelExtraPeriod);
             this.groupBoxExtraConf.Controls.Add(this.textBoxExtraChangePercentage);
             this.groupBoxExtraConf.Controls.Add(this.labelExtraChangePercentage);
-            this.groupBoxExtraConf.Location = new System.Drawing.Point(535, 194);
+            this.groupBoxExtraConf.Location = new System.Drawing.Point(502, 194);
             this.groupBoxExtraConf.Name = "groupBoxExtraConf";
-            this.groupBoxExtraConf.Size = new System.Drawing.Size(452, 146);
+            this.groupBoxExtraConf.Size = new System.Drawing.Size(441, 146);
             this.groupBoxExtraConf.TabIndex = 18;
             this.groupBoxExtraConf.TabStop = false;
             this.groupBoxExtraConf.Text = "Algorithm extra configuration";
@@ -480,26 +493,116 @@
             this.labelExtraChangePercentage.TabIndex = 11;
             this.labelExtraChangePercentage.Text = "Change Percentage";
             // 
-            // textBoxSingleValue
+            // txtSingleValue
             // 
-            this.textBoxSingleValue.Location = new System.Drawing.Point(646, 361);
-            this.textBoxSingleValue.Name = "textBoxSingleValue";
-            this.textBoxSingleValue.ReadOnly = true;
-            this.textBoxSingleValue.Size = new System.Drawing.Size(279, 20);
-            this.textBoxSingleValue.TabIndex = 20;
-            this.textBoxSingleValue.Text = "New Price";
+            this.txtSingleValue.Location = new System.Drawing.Point(646, 361);
+            this.txtSingleValue.Name = "txtSingleValue";
+            this.txtSingleValue.ReadOnly = true;
+            this.txtSingleValue.Size = new System.Drawing.Size(279, 20);
+            this.txtSingleValue.TabIndex = 20;
+            this.txtSingleValue.Text = "New Price";
             // 
             // fileSystemWatcher1
             // 
             this.fileSystemWatcher1.EnableRaisingEvents = true;
             this.fileSystemWatcher1.SynchronizingObject = this;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(136, 32);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(73, 13);
+            this.label1.TabIndex = 19;
+            this.label1.Text = "Benefits- Real";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(136, 61);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(85, 13);
+            this.label2.TabIndex = 20;
+            this.label2.Text = "Benefit algorithm";
+            // 
+            // txtBenefitsReal
+            // 
+            this.txtBenefitsReal.Location = new System.Drawing.Point(236, 29);
+            this.txtBenefitsReal.Name = "txtBenefitsReal";
+            this.txtBenefitsReal.ReadOnly = true;
+            this.txtBenefitsReal.Size = new System.Drawing.Size(180, 20);
+            this.txtBenefitsReal.TabIndex = 19;
+            // 
+            // txtBenefitAlg
+            // 
+            this.txtBenefitAlg.Location = new System.Drawing.Point(236, 58);
+            this.txtBenefitAlg.Name = "txtBenefitAlg";
+            this.txtBenefitAlg.ReadOnly = true;
+            this.txtBenefitAlg.Size = new System.Drawing.Size(180, 20);
+            this.txtBenefitAlg.TabIndex = 21;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.CalculateBenefits);
+            this.groupBox1.Controls.Add(this.txtBenefitAlg);
+            this.groupBox1.Controls.Add(this.txtBenefitsReal);
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Location = new System.Drawing.Point(502, 56);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(452, 97);
+            this.groupBox1.TabIndex = 20;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Comparation Benefits";
+            // 
+            // CalculateBenefits
+            // 
+            this.CalculateBenefits.Location = new System.Drawing.Point(33, 29);
+            this.CalculateBenefits.Name = "CalculateBenefits";
+            this.CalculateBenefits.Size = new System.Drawing.Size(75, 23);
+            this.CalculateBenefits.TabIndex = 0;
+            this.CalculateBenefits.Text = "Calculate Benefits";
+            this.CalculateBenefits.UseVisualStyleBackColor = true;
+            this.CalculateBenefits.Click += new System.EventHandler(this.CalculateBenefits_Click);
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.chart1);
+            this.panel1.Location = new System.Drawing.Point(0, 28);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1135, 1010);
+            this.panel1.TabIndex = 22;
+            // 
+            // chart1
+            // 
+            chartArea2.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chart1.Legends.Add(legend2);
+            this.chart1.Location = new System.Drawing.Point(30, 425);
+            this.chart1.Name = "chart1";
+            this.chart1.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series3.Legend = "Legend1";
+            series3.Name = "Imported";
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series4.Legend = "Legend1";
+            series4.Name = "Simulation";
+            this.chart1.Series.Add(series3);
+            this.chart1.Series.Add(series4);
+            this.chart1.Size = new System.Drawing.Size(1074, 587);
+            this.chart1.TabIndex = 22;
+            this.chart1.Text = "chart";
+            // 
             // FormTestAlgorithm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1112, 474);
-            this.Controls.Add(this.textBoxSingleValue);
+            this.ClientSize = new System.Drawing.Size(1135, 1031);
+            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.txtSingleValue);
             this.Controls.Add(this.groupBoxExtraConf);
             this.Controls.Add(this.groupBoxRealData);
             this.Controls.Add(this.groupBoxAlgorithmConf);
@@ -507,6 +610,7 @@
             this.Controls.Add(this.buttonGraph);
             this.Controls.Add(this.buttonExport);
             this.Controls.Add(this.singleValue);
+            this.Controls.Add(this.panel1);
             this.Name = "FormTestAlgorithm";
             this.Text = "Inpuct info";
             this.Load += new System.EventHandler(this.FormTestAlgorithm_Load);
@@ -520,6 +624,11 @@
             this.groupBoxExtraConf.ResumeLayout(false);
             this.groupBoxExtraConf.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.periodDataBindingSource)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -533,14 +642,14 @@
         private System.Windows.Forms.Button buttonExport;
         private System.Windows.Forms.Button buttonGraph;
         private System.Windows.Forms.Label labelBasePrice;
-        private System.Windows.Forms.TextBox textBoxBasePrice;
+        private System.Windows.Forms.TextBox txtBasePrice;
         private System.Windows.Forms.Label labelMaxPrice;
-        private System.Windows.Forms.TextBox textBoxMaxPrice;
-        private System.Windows.Forms.TextBox textBoxMinPrice;
+        private System.Windows.Forms.TextBox txtMaxPrice;
+        private System.Windows.Forms.TextBox txtMinPrice;
         private System.Windows.Forms.Label labelMinPrice;
-        private System.Windows.Forms.TextBox textBoxChangeAmount;
+        private System.Windows.Forms.TextBox txtChangeAmount;
         private System.Windows.Forms.Label labelChangeAmount;
-        private System.Windows.Forms.TextBox textBoxPeriod;
+        private System.Windows.Forms.TextBox txtPeriod;
         private System.Windows.Forms.Label labelPeriod;
         private System.Windows.Forms.BindingNavigator bindingNavigator1;
         private System.Windows.Forms.ToolStripButton bindingNavigatorAddNewItem;
@@ -554,7 +663,7 @@
         private System.Windows.Forms.ToolStripButton bindingNavigatorMoveNextItem;
         private System.Windows.Forms.ToolStripButton bindingNavigatorMoveLastItem;
         private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator2;
-        private System.Windows.Forms.ComboBox comboBoxPeriodType;
+        private System.Windows.Forms.ComboBox cbPeriodType;
         private System.Windows.Forms.GroupBox groupBoxAlgorithmConf;
         private System.Windows.Forms.GroupBox groupBoxRealData;
         private System.Windows.Forms.Button btnGraphReal;
@@ -568,8 +677,17 @@
         private System.Windows.Forms.Label labelExtraChangePercentage;
         private System.Windows.Forms.TextBox textBoxExtraStartPeriod;
         private System.Windows.Forms.Label labelExtraStartPeriod;
-        private System.Windows.Forms.TextBox textBoxSingleValue;
+        private System.Windows.Forms.TextBox txtSingleValue;
         private System.IO.FileSystemWatcher fileSystemWatcher1;
+        private System.Windows.Forms.BindingSource periodDataBindingSource;
+        private System.Windows.Forms.TextBox txtBenefitAlg;
+        private System.Windows.Forms.TextBox txtBenefitsReal;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button CalculateBenefits;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
     }
 }
 
