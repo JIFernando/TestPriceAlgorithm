@@ -32,10 +32,10 @@ namespace TestPriceAlgorithm
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormTestAlgorithm));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.btnImportCsv = new System.Windows.Forms.Button();
             this.csvFileName = new System.Windows.Forms.TextBox();
             this.singleValue = new System.Windows.Forms.Button();
@@ -64,16 +64,17 @@ namespace TestPriceAlgorithm
             this.bindingNavigatorMoveLastItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.cbPeriodType = new System.Windows.Forms.ComboBox();
+            this.periodTypeBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.groupBoxAlgorithmConf = new System.Windows.Forms.GroupBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.chbIncludeExtra = new System.Windows.Forms.CheckBox();
             this.groupBoxRealData = new System.Windows.Forms.GroupBox();
             this.btnGraphReal = new System.Windows.Forms.Button();
             this.groupBoxExtraConf = new System.Windows.Forms.GroupBox();
             this.textBoxExtraStartPeriod = new System.Windows.Forms.TextBox();
             this.labelExtraStartPeriod = new System.Windows.Forms.Label();
-            this.comboBoxExtraPeriodType = new System.Windows.Forms.ComboBox();
+            this.cbExtraPeriodType = new System.Windows.Forms.ComboBox();
             this.labelInfoExtraConfig = new System.Windows.Forms.Label();
-            this.textBoxExtraPeriod = new System.Windows.Forms.TextBox();
+            this.tbExtraPeriod = new System.Windows.Forms.TextBox();
             this.labelExtraPeriod = new System.Windows.Forms.Label();
             this.textBoxExtraChangePercentage = new System.Windows.Forms.TextBox();
             this.labelExtraChangePercentage = new System.Windows.Forms.Label();
@@ -90,6 +91,7 @@ namespace TestPriceAlgorithm
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).BeginInit();
             this.bindingNavigator1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.periodTypeBindingSource)).BeginInit();
             this.groupBoxAlgorithmConf.SuspendLayout();
             this.groupBoxRealData.SuspendLayout();
             this.groupBoxExtraConf.SuspendLayout();
@@ -350,9 +352,13 @@ namespace TestPriceAlgorithm
             this.cbPeriodType.Size = new System.Drawing.Size(121, 21);
             this.cbPeriodType.TabIndex = 16;
             // 
+            // periodTypeBindingSource
+            // 
+            this.periodTypeBindingSource.DataSource = typeof(TestPriceAlgorithm.FormTestAlgorithm.PeriodType);
+            // 
             // groupBoxAlgorithmConf
             // 
-            this.groupBoxAlgorithmConf.Controls.Add(this.checkBox1);
+            this.groupBoxAlgorithmConf.Controls.Add(this.chbIncludeExtra);
             this.groupBoxAlgorithmConf.Controls.Add(this.txtMinPrice);
             this.groupBoxAlgorithmConf.Controls.Add(this.cbPeriodType);
             this.groupBoxAlgorithmConf.Controls.Add(this.labelBasePrice);
@@ -371,16 +377,16 @@ namespace TestPriceAlgorithm
             this.groupBoxAlgorithmConf.TabStop = false;
             this.groupBoxAlgorithmConf.Text = "Algorithm configuration";
             // 
-            // checkBox1
+            // chbIncludeExtra
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(146, 167);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(152, 17);
-            this.checkBox1.TabIndex = 17;
-            this.checkBox1.Text = "Include Extra configuration";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            this.chbIncludeExtra.AutoSize = true;
+            this.chbIncludeExtra.Location = new System.Drawing.Point(146, 167);
+            this.chbIncludeExtra.Name = "chbIncludeExtra";
+            this.chbIncludeExtra.Size = new System.Drawing.Size(152, 17);
+            this.chbIncludeExtra.TabIndex = 17;
+            this.chbIncludeExtra.Text = "Include Extra configuration";
+            this.chbIncludeExtra.UseVisualStyleBackColor = true;
+            this.chbIncludeExtra.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // groupBoxRealData
             // 
@@ -408,9 +414,9 @@ namespace TestPriceAlgorithm
             // 
             this.groupBoxExtraConf.Controls.Add(this.textBoxExtraStartPeriod);
             this.groupBoxExtraConf.Controls.Add(this.labelExtraStartPeriod);
-            this.groupBoxExtraConf.Controls.Add(this.comboBoxExtraPeriodType);
+            this.groupBoxExtraConf.Controls.Add(this.cbExtraPeriodType);
             this.groupBoxExtraConf.Controls.Add(this.labelInfoExtraConfig);
-            this.groupBoxExtraConf.Controls.Add(this.textBoxExtraPeriod);
+            this.groupBoxExtraConf.Controls.Add(this.tbExtraPeriod);
             this.groupBoxExtraConf.Controls.Add(this.labelExtraPeriod);
             this.groupBoxExtraConf.Controls.Add(this.textBoxExtraChangePercentage);
             this.groupBoxExtraConf.Controls.Add(this.labelExtraChangePercentage);
@@ -438,19 +444,19 @@ namespace TestPriceAlgorithm
             this.labelExtraStartPeriod.TabIndex = 17;
             this.labelExtraStartPeriod.Text = "Start configuration afer period:";
             // 
-            // comboBoxExtraPeriodType
+            // cbExtraPeriodType
             // 
-            this.comboBoxExtraPeriodType.FormattingEnabled = true;
-            this.comboBoxExtraPeriodType.Items.AddRange(new object[] {
+            this.cbExtraPeriodType.FormattingEnabled = true;
+            this.cbExtraPeriodType.Items.AddRange(new object[] {
             "Seconds",
             "Minutes",
             "Hours",
             "Days",
             "Months"});
-            this.comboBoxExtraPeriodType.Location = new System.Drawing.Point(204, 76);
-            this.comboBoxExtraPeriodType.Name = "comboBoxExtraPeriodType";
-            this.comboBoxExtraPeriodType.Size = new System.Drawing.Size(121, 21);
-            this.comboBoxExtraPeriodType.TabIndex = 16;
+            this.cbExtraPeriodType.Location = new System.Drawing.Point(204, 76);
+            this.cbExtraPeriodType.Name = "cbExtraPeriodType";
+            this.cbExtraPeriodType.Size = new System.Drawing.Size(121, 21);
+            this.cbExtraPeriodType.TabIndex = 16;
             // 
             // labelInfoExtraConfig
             // 
@@ -461,12 +467,12 @@ namespace TestPriceAlgorithm
             this.labelInfoExtraConfig.TabIndex = 5;
             this.labelInfoExtraConfig.Text = "Change the prices in case the sales are very unexpective";
             // 
-            // textBoxExtraPeriod
+            // tbExtraPeriod
             // 
-            this.textBoxExtraPeriod.Location = new System.Drawing.Point(146, 77);
-            this.textBoxExtraPeriod.Name = "textBoxExtraPeriod";
-            this.textBoxExtraPeriod.Size = new System.Drawing.Size(52, 20);
-            this.textBoxExtraPeriod.TabIndex = 14;
+            this.tbExtraPeriod.Location = new System.Drawing.Point(146, 77);
+            this.tbExtraPeriod.Name = "tbExtraPeriod";
+            this.tbExtraPeriod.Size = new System.Drawing.Size(52, 20);
+            this.tbExtraPeriod.TabIndex = 14;
             // 
             // labelExtraPeriod
             // 
@@ -575,23 +581,23 @@ namespace TestPriceAlgorithm
             // 
             // chart1
             // 
-            chartArea2.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.chart1.Legends.Add(legend2);
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
             this.chart1.Location = new System.Drawing.Point(30, 425);
             this.chart1.Name = "chart1";
             this.chart1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series3.Legend = "Legend1";
-            series3.Name = "Imported";
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series4.Legend = "Legend1";
-            series4.Name = "Simulation";
-            this.chart1.Series.Add(series3);
-            this.chart1.Series.Add(series4);
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series1.Legend = "Legend1";
+            series1.Name = "Imported";
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series2.Legend = "Legend1";
+            series2.Name = "Simulation";
+            this.chart1.Series.Add(series1);
+            this.chart1.Series.Add(series2);
             this.chart1.Size = new System.Drawing.Size(1074, 587);
             this.chart1.TabIndex = 22;
             this.chart1.Text = "chart";
@@ -617,6 +623,7 @@ namespace TestPriceAlgorithm
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).EndInit();
             this.bindingNavigator1.ResumeLayout(false);
             this.bindingNavigator1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.periodTypeBindingSource)).EndInit();
             this.groupBoxAlgorithmConf.ResumeLayout(false);
             this.groupBoxAlgorithmConf.PerformLayout();
             this.groupBoxRealData.ResumeLayout(false);
@@ -667,11 +674,11 @@ namespace TestPriceAlgorithm
         private System.Windows.Forms.GroupBox groupBoxAlgorithmConf;
         private System.Windows.Forms.GroupBox groupBoxRealData;
         private System.Windows.Forms.Button btnGraphReal;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox chbIncludeExtra;
         private System.Windows.Forms.GroupBox groupBoxExtraConf;
-        private System.Windows.Forms.ComboBox comboBoxExtraPeriodType;
+        private System.Windows.Forms.ComboBox cbExtraPeriodType;
         private System.Windows.Forms.Label labelInfoExtraConfig;
-        private System.Windows.Forms.TextBox textBoxExtraPeriod;
+        private System.Windows.Forms.TextBox tbExtraPeriod;
         private System.Windows.Forms.Label labelExtraPeriod;
         private System.Windows.Forms.TextBox textBoxExtraChangePercentage;
         private System.Windows.Forms.Label labelExtraChangePercentage;
@@ -688,6 +695,7 @@ namespace TestPriceAlgorithm
         private System.Windows.Forms.Button CalculateBenefits;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
+        private System.Windows.Forms.BindingSource periodTypeBindingSource;
     }
 }
 

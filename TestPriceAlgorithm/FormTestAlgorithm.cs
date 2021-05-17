@@ -19,6 +19,18 @@ namespace TestPriceAlgorithm
         private List<int> _exportSalesData = new List<int>();
         private List<double> _exportPriceData = new List<double>();
 
+        private List<int> _exportBaseSalesData = new List<int>();
+        private List<double> _exportBasePriceData = new List<double>();
+
+        enum KindBuyer
+        {
+            Cautious = 1,
+            Occasional,
+            Normal,
+            Compulsive,
+            Aggressive
+        }
+
         public enum PeriodType
         {
             Minutes = 1,
@@ -31,6 +43,8 @@ namespace TestPriceAlgorithm
         public FormTestAlgorithm()
         {
             InitializeComponent();
+            cbPeriodType.DataSource = Enum.GetValues(typeof(PeriodType));
+            cbExtraPeriodType.DataSource = Enum.GetValues(typeof(PeriodType));
         }
 
         private void FormTestAlgorithm_Load(object sender, EventArgs e)
@@ -117,6 +131,11 @@ namespace TestPriceAlgorithm
 
         private void btnGraph_Click(object sender, EventArgs e)
         {
+
+            if (chbIncludeExtra.Checked)
+            {
+                ValidateExtraConfiguration();
+            }
             double basePrice = double.Parse(txtBasePrice.Text);
             int period = int.Parse(txtPeriod.Text);
             int periodType = cbPeriodType.SelectedIndex;
@@ -147,6 +166,11 @@ namespace TestPriceAlgorithm
 
         private void btnExport_Click(object sender, EventArgs e)
         {
+            if (chbIncludeExtra.Checked)
+            {
+                ValidateExtraConfiguration();
+            }
+
             DateTime[] dates = _exportDateData.ToArray();
             int[] sales = _exportSalesData.ToArray();
             double[] prices = _exportPriceData.ToArray();
@@ -182,12 +206,12 @@ namespace TestPriceAlgorithm
                    maxPrice = double.Parse(this.txtMaxPrice.Text),
                    minPrice = double.Parse(this.txtMinPrice.Text);
 
-            if (tendence0 < tendence1 && maxPrice > newPrice + changeAmount)
+            if (tendence0 <= tendence1 && maxPrice >= newPrice + changeAmount)
             {
                 //Positive number of sales => Increase value
                 newPrice += changeAmount;
             }
-            else if (minPrice < newPrice - double.Parse(this.txtChangeAmount.Text))
+            else if (minPrice <= newPrice - double.Parse(this.txtChangeAmount.Text))
             {
                 //Negative number of sales => Decrease value
                 newPrice -= changeAmount;
@@ -225,6 +249,36 @@ namespace TestPriceAlgorithm
             return total / period;
         }
 
+        private bool ValidateExtraConfiguration()
+        {
+            int nPeriod = 0;
+            int sPeriod = 0;
+            bool ok = false;
+
+            if (int.TryParse(txtPeriod.Text, out nPeriod) && int.TryParse(tbExtraPeriod.Text, out sPeriod))
+            {
+                if (cbExtraPeriodType.SelectedIndex == cbPeriodType.SelectedIndex)
+                {
+                    ok = true;
+                }
+                else if (cbExtraPeriodType.SelectedIndex < cbPeriodType.SelectedIndex)
+                {
+                    ok = nPeriod > sPeriod;
+                }
+            } 
+            else
+            {
+                showError("There was an error format on period types.");
+            }
+
+            return ok;
+        }
+        /*
+        private bool ValidateType(string input, Type type)
+        {
+            return type.Parse
+        }
+        */
         private void SetImport2FirstPeriods(int period, double basePrice)
         {
             int[] auxSales = new int[period * 2];
@@ -300,6 +354,22 @@ namespace TestPriceAlgorithm
             txtBenefitAlg.Text = (toatlValue).ToString();
         }
 
+        private void showError(string message)
+        {
+            // Initializes the variables to pass to the MessageBox.Show method.
+            //string message = "You did not enter a server name. Cancel this operation?";
+            string caption = "Error Detected in Input";
+            MessageBoxButtons buttons = MessageBoxButtons.OK;
+            DialogResult result;
+
+            // Displays the MessageBox.
+            result = MessageBox.Show(message, caption, buttons);
+            if (result == System.Windows.Forms.DialogResult.Yes)
+            {
+                // Closes the parent form.
+                this.Close();
+            }            
+        }
 
         /*
         /// <summary>
