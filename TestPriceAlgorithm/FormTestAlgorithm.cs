@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using TestPriceAlgorithm.Utils;
 
 namespace TestPriceAlgorithm
 {
@@ -123,18 +124,25 @@ namespace TestPriceAlgorithm
             double basePrice = double.Parse(txtBasePrice.Text);
             int period = int.Parse(txtPeriod.Text);
             int periodType = cbPeriodType.SelectedIndex;
+            double cAmount = double.Parse(txtChangeAmount.Text);
+            double maxPrice = double.Parse(txtMaxPrice.Text);
+            double minPrice = double.Parse(txtMinPrice.Text);
 
             SetImport2FirstPeriods(period, basePrice);
 
-            txtSingleValue.Text = GetNewPrice(basePrice, period, periodType).ToString();
+            txtSingleValue.Text = AlgorithmFunctions.GetNewPrice(basePrice, period, periodType, _exportDateData, _exportSalesData, cAmount, maxPrice, minPrice).ToString();
         }
 
         private void btnGraph_Click(object sender, EventArgs e)
         {
+            double cAmount = double.Parse(txtChangeAmount.Text);
+            double maxPrice = double.Parse(txtMaxPrice.Text);
+            double minPrice = double.Parse(txtMinPrice.Text);
 
-            if (chbIncludeExtra.Checked)
+            if (chbIncludeExtra.Checked && !ExtraFunctions.ValidateExtraConfiguration(txtPeriod.Text, tbExtraPeriod.Text,
+                cbPeriodType.SelectedIndex, cbExtraPeriodType.SelectedIndex))
             {
-                ValidateExtraConfiguration();
+                showError("There was an error format on period types.");
             }
             double basePrice = double.Parse(txtBasePrice.Text);
             int period = int.Parse(txtPeriod.Text);
@@ -145,9 +153,9 @@ namespace TestPriceAlgorithm
 
             for (int i=period; i<_importDateData.Count; i++)
             {
-                newPrice = GetNewPrice(newPrice, period, periodType);
+                newPrice = AlgorithmFunctions.GetNewPrice(newPrice, period, periodType, _exportDateData, _exportSalesData, cAmount, maxPrice, minPrice);
                 _exportPriceData.Add(newPrice);
-                _exportSalesData.Add(CalculateSales(newPrice, _importSalesData.ToArray()[i]));
+                _exportSalesData.Add(AlgorithmFunctions.CalculateSales(newPrice, _importSalesData.ToArray()[i], double.Parse(txtBasePrice.Text)));
             }
 
             DateTime[] x = _importDateData.ToArray();
@@ -166,9 +174,10 @@ namespace TestPriceAlgorithm
 
         private void btnExport_Click(object sender, EventArgs e)
         {
-            if (chbIncludeExtra.Checked)
+            if (chbIncludeExtra.Checked && !ExtraFunctions.ValidateExtraConfiguration(txtPeriod.Text, tbExtraPeriod.Text, 
+                cbPeriodType.SelectedIndex, cbExtraPeriodType.SelectedIndex))
             {
-                ValidateExtraConfiguration();
+                showError("There was an error format on period types.");
             }
 
             DateTime[] dates = _exportDateData.ToArray();
@@ -188,97 +197,6 @@ namespace TestPriceAlgorithm
             File.WriteAllText(@"C:\Users\jimen\source\repos\TestPriceAlgorithm\testCSV\Test.csv", csv.ToString());
         }
 
-        private void ReadCSV(string filePath)
-        {
-            using (var reader = new StreamReader(filePath))
-            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
-            {
-                var records = csv.GetRecords<FileDataImport>();
-            }            
-        }
-
-        private double GetNewPrice(double currentPrice, int period, int periocType)
-        {
-            double newPrice = currentPrice,
-                   tendence0 = Tendence(_exportDateData.ToArray()[_exportDateData.Count - period], period, 0),
-                   tendence1 = Tendence(_exportDateData.ToArray()[_exportDateData.Count - 1], period, 0),
-                   changeAmount = double.Parse(this.txtChangeAmount.Text),
-                   maxPrice = double.Parse(this.txtMaxPrice.Text),
-                   minPrice = double.Parse(this.txtMinPrice.Text);
-
-            if (tendence0 <= tendence1 && maxPrice >= newPrice + changeAmount)
-            {
-                //Positive number of sales => Increase value
-                newPrice += changeAmount;
-            }
-            else if (minPrice <= newPrice - double.Parse(this.txtChangeAmount.Text))
-            {
-                //Negative number of sales => Decrease value
-                newPrice -= changeAmount;
-            }
-
-            return newPrice;
-        }
-
-        private double Tendence(DateTime endDatePeriod, int period, int periocType)
-        {
-            //First Period
-            double mediaSales1 = Average(period, _exportSalesData.ToArray(), _exportSalesData.Count - 2*period);
-		    double mediaDates1 = Average(period, ConvertDateToDouble(_exportDateData.ToArray()),
-                _exportDateData.Count - 2*period); 
-
-            //Second Period
-            double mediaSales2 = Average(period, _exportSalesData.ToArray(), _exportSalesData.Count - 1 - period);
-            double mediaDates2 = Average(period, ConvertDateToDouble(_exportDateData.ToArray()), 
-                _exportDateData.Count- 1 - period);
-
-            double currentPeriod = DateToMin(endDatePeriod);
-
-            return ((mediaSales2 - mediaSales1) / (mediaDates2 - mediaDates1) * (currentPeriod - mediaDates1)) + mediaSales1;
-        }
-
-        private double Average( int period, int[] array, int startIndex = 0)
-        {
-            double total = 0;
-
-            for (int i = startIndex; i < period && period < array.Length; i++)
-            {
-                total += array[i];
-            }
-
-            return total / period;
-        }
-
-        private bool ValidateExtraConfiguration()
-        {
-            int nPeriod = 0;
-            int sPeriod = 0;
-            bool ok = false;
-
-            if (int.TryParse(txtPeriod.Text, out nPeriod) && int.TryParse(tbExtraPeriod.Text, out sPeriod))
-            {
-                if (cbExtraPeriodType.SelectedIndex == cbPeriodType.SelectedIndex)
-                {
-                    ok = true;
-                }
-                else if (cbExtraPeriodType.SelectedIndex < cbPeriodType.SelectedIndex)
-                {
-                    ok = nPeriod > sPeriod;
-                }
-            } 
-            else
-            {
-                showError("There was an error format on period types.");
-            }
-
-            return ok;
-        }
-        /*
-        private bool ValidateType(string input, Type type)
-        {
-            return type.Parse
-        }
-        */
         private void SetImport2FirstPeriods(int period, double basePrice)
         {
             int[] auxSales = new int[period * 2];
@@ -295,45 +213,6 @@ namespace TestPriceAlgorithm
             _exportSalesData = auxSales.ToList();
             //_exportDateData = auxDates.OfType<DateTime>().ToList();
             _exportDateData = _importDateData;
-        }
-
-        private int[] ConvertDateToDouble(DateTime[] datetimes)
-        {
-            int[] aux = new int[datetimes.Length];
-
-            for (int i = 0; i< datetimes.Length; i++)
-            {
-                aux[i] = DateToMin(datetimes[i]);
-            }
-
-            return aux.ToArray();
-        }
-        
-        //15% to 5%
-        private int CalculateSales(double newPrice, double realSales)
-        {
-            double priceBaseReal = double.Parse(txtBasePrice.Text);
-            int newSales = 0;
-
-            if (newPrice > priceBaseReal)
-            {
-                //15% - de probablilidades de mas ventas y un 5% de mas que el real
-                newSales = Convert.ToInt32(_random.Next(85, 105) * realSales / 100);
-            }
-            else
-            {
-                //15% + de probablilidades de mas ventas y un 5% de menos que el real
-                newSales = Convert.ToInt32(_random.Next(95, 115) * realSales / 100);
-            }
-
-            return newSales;
-        }
-
-        private int DateToMin(DateTime datetime)
-        {
-            return (datetime.Year * 60 * 24 * 365) + 
-                (datetime.Month * 60 * 24 * 365 / 12) + 
-                (datetime.Day * 60 * 24);
         }
 
         private void CalculateBenefits_Click(object sender, EventArgs e)
@@ -370,29 +249,5 @@ namespace TestPriceAlgorithm
                 this.Close();
             }            
         }
-
-        /*
-        /// <summary>
-        /// Generate dummy date for 2 months with min save sentions of mins
-        /// </summary>
-        private void GenerateRandomHistory()
-        {
-            ClearExportData();
-
-            int num = 0;
-            //2 months = 86400 min
-            for (int i = 0; i<60; i++)
-            {
-                num = _random.Next(0, 100);
-
-
-            }
-        }
-
-        private void ClearExportData()
-        {
-            _exportDateData = null;
-            _exportSalesData = null;
-        }*/
     }
 }
