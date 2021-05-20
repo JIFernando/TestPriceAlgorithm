@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TestPriceAlgorithm.Class
 {
-    public class Buyer
+    public class Client
     {
         public int id { get; set; }
         public int kindBuyer { get; set; }

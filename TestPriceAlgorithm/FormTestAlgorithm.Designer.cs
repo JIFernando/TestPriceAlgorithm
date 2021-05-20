@@ -32,10 +32,6 @@ namespace TestPriceAlgorithm
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormTestAlgorithm));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.btnImportCsv = new System.Windows.Forms.Button();
             this.csvFileName = new System.Windows.Forms.TextBox();
             this.singleValue = new System.Windows.Forms.Button();
@@ -88,7 +84,6 @@ namespace TestPriceAlgorithm
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.CalculateBenefits = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).BeginInit();
             this.bindingNavigator1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.periodTypeBindingSource)).BeginInit();
@@ -98,8 +93,6 @@ namespace TestPriceAlgorithm
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.periodDataBindingSource)).BeginInit();
             this.groupBox1.SuspendLayout();
-            this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.SuspendLayout();
             // 
             // btnImportCsv
@@ -573,40 +566,16 @@ namespace TestPriceAlgorithm
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.chart1);
             this.panel1.Location = new System.Drawing.Point(0, 28);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1135, 1010);
+            this.panel1.Size = new System.Drawing.Size(1135, 435);
             this.panel1.TabIndex = 22;
-            // 
-            // chart1
-            // 
-            chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chart1.Legends.Add(legend1);
-            this.chart1.Location = new System.Drawing.Point(30, 425);
-            this.chart1.Name = "chart1";
-            this.chart1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series1.Legend = "Legend1";
-            series1.Name = "Imported";
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series2.Legend = "Legend1";
-            series2.Name = "Simulation";
-            this.chart1.Series.Add(series1);
-            this.chart1.Series.Add(series2);
-            this.chart1.Size = new System.Drawing.Size(1074, 587);
-            this.chart1.TabIndex = 22;
-            this.chart1.Text = "chart";
             // 
             // FormTestAlgorithm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1135, 1031);
+            this.ClientSize = new System.Drawing.Size(1135, 466);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.txtSingleValue);
             this.Controls.Add(this.groupBoxExtraConf);
@@ -634,8 +603,6 @@ namespace TestPriceAlgorithm
             ((System.ComponentModel.ISupportInitialize)(this.periodDataBindingSource)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -694,7 +661,6 @@ namespace TestPriceAlgorithm
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button CalculateBenefits;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
         private System.Windows.Forms.BindingSource periodTypeBindingSource;
     }
 }

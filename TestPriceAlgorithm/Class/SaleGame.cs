@@ -15,5 +15,6 @@ namespace TestPriceAlgorithm.Class
         public double price { get; set; }
 
         public Game Game { get; set; }
+        public Client Client { get; set; }
     }
 }

@@ -23,7 +23,7 @@ namespace TestPriceAlgorithm
         private List<int> _exportBaseSalesData = new List<int>();
         private List<double> _exportBasePriceData = new List<double>();
 
-        enum KindBuyer
+        public enum KindBuyer
         {
             Cautious = 1,
             Occasional,
@@ -39,8 +39,7 @@ namespace TestPriceAlgorithm
             Days,
             Months
         }
-
-
+        
         public FormTestAlgorithm()
         {
             InitializeComponent();
@@ -64,14 +63,8 @@ namespace TestPriceAlgorithm
             DateTime[] x = _importDateData.ToArray();
             int[] y = _importSalesData.ToArray();
 
-            chart1.Titles.Clear();
-
-            chart1.Titles.Add("Imported sales values");
-            for (int i = 0; i<_importDateData.Count; i++)
-            {
-                chart1.Series["Imported"].Points.AddXY(x[i], y[i]);
-
-            }
+            Grahps grahps = new Grahps(Constancts.ImportedTitule, Constancts.Serie1, x, y);
+            grahps.ShowGrahpVaues();
         }
 
         private void btnImportCsv_Click(object sender, EventArgs e)
@@ -93,11 +86,11 @@ namespace TestPriceAlgorithm
 
                         for (int i = 0; i < columns.Length; i++)
                         {
-                            if (columns[i] == "DateTime")
+                            if (columns[i] == Constancts.DateTime)
                             {
                                 columnDate = i;
                             }
-                            else if (columns[i] == "SalesByDay")
+                            else if (columns[i] == Constancts.SalesByDay)
                             {
                                 columnSales = i;
                             }
@@ -142,7 +135,7 @@ namespace TestPriceAlgorithm
             if (chbIncludeExtra.Checked && !ExtraFunctions.ValidateExtraConfiguration(txtPeriod.Text, tbExtraPeriod.Text,
                 cbPeriodType.SelectedIndex, cbExtraPeriodType.SelectedIndex))
             {
-                showError("There was an error format on period types.");
+                showError(Constancts.ErrorMessagePeriodType);
             }
             double basePrice = double.Parse(txtBasePrice.Text);
             int period = int.Parse(txtPeriod.Text);
@@ -161,15 +154,9 @@ namespace TestPriceAlgorithm
             DateTime[] x = _importDateData.ToArray();
             int[] y = _importSalesData.ToArray();
             int[] y2 = _exportSalesData.ToArray();
-
-            chart1.Titles.Clear();
-
-            chart1.Titles.Add("Real vs Algorithm sales");
-            for (int i = 0; i < _importDateData.Count; i++)
-            {
-                chart1.Series["Imported"].Points.AddXY(x[i], y[i]);
-                chart1.Series["Simulation"].Points.AddXY(x[i], y2[i]);
-            }
+            
+            Grahps grahps = new Grahps(Constancts.CompareTitule, Constancts.Serie1, x, y , Constancts.Serie2, y2);
+            grahps.ShowGrahpVaues();
         }
 
         private void btnExport_Click(object sender, EventArgs e)
@@ -177,7 +164,7 @@ namespace TestPriceAlgorithm
             if (chbIncludeExtra.Checked && !ExtraFunctions.ValidateExtraConfiguration(txtPeriod.Text, tbExtraPeriod.Text, 
                 cbPeriodType.SelectedIndex, cbExtraPeriodType.SelectedIndex))
             {
-                showError("There was an error format on period types.");
+                showError(Constancts.ErrorMessagePeriodType);
             }
 
             DateTime[] dates = _exportDateData.ToArray();
@@ -237,7 +224,7 @@ namespace TestPriceAlgorithm
         {
             // Initializes the variables to pass to the MessageBox.Show method.
             //string message = "You did not enter a server name. Cancel this operation?";
-            string caption = "Error Detected in Input";
+            string caption = Constancts.ErrorDefautInput;
             MessageBoxButtons buttons = MessageBoxButtons.OK;
             DialogResult result;
 
