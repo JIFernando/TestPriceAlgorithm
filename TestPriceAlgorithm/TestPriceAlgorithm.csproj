@@ -66,12 +66,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class\Client.cs" />
+    <Compile Include="Class\AggressiveBuyer.cs" />
+    <Compile Include="Class\Buyer.cs" />
+    <Compile Include="Class\CautiousBuyer.cs" />
+    <Compile Include="Class\CompulsiveBuyer.cs" />
+    <Compile Include="Factory\AggressiveBuyerFactory.cs" />
+    <Compile Include="Factory\BuyerFactory.cs" />
     <Compile Include="Class\Game.cs" />
+    <Compile Include="Class\NormalBuyer.cs" />
+    <Compile Include="Class\OccasionalBuyer.cs" />
     <Compile Include="Class\SaleGame.cs" />
-    <Compile Include="Class\SalesEvolution.cs" />
     <Compile Include="Constancts.cs" />
-    <Compile Include="DataBase\DBFuncion.cs" />
+    <Compile Include="Factory\CautiousBuyerFactory.cs" />
+    <Compile Include="Factory\CompulsiveBuyerFactory.cs" />
+    <Compile Include="Factory\NormalBuyerFactory.cs" />
+    <Compile Include="Factory\OccasionalBuyerFactory.cs" />
     <Compile Include="FileDataImport.cs" />
     <Compile Include="FormTestAlgorithm.cs">
       <SubType>Form</SubType>
@@ -88,7 +97,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\AlgorithmFunctions.cs" />
-    <Compile Include="Utils\BuyerBehavior.cs" />
     <Compile Include="Utils\ExtraFunctions.cs" />
     <EmbeddedResource Include="FormTestAlgorithm.resx">
       <DependentUpon>FormTestAlgorithm.cs</DependentUpon>
@@ -121,5 +129,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

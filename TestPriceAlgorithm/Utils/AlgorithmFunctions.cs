@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TestPriceAlgorithm.Class;
 
 namespace TestPriceAlgorithm.Utils
 {
@@ -11,11 +12,27 @@ namespace TestPriceAlgorithm.Utils
 
         private readonly static Random _random = new Random();
 
-        public static double Average(int period, int[] array, int startIndex = 0)
+        public static DateTime AverageDateTime(List<DateTime> dates)
+        {
+            var count = dates.Count;
+            double temp = 0D;
+            for (int i = 0; i < count; i++)
+            {
+                temp += dates[i].Ticks / (double)count;
+            }
+            return new DateTime((long)temp);
+        }
+
+        public static double Average(int period, double[] array, int startIndex = 0)
         {
             double total = 0;
 
-            for (int i = startIndex; i < period && period < array.Length; i++)
+            if (startIndex < 0)
+            {
+                startIndex = 0;
+            }
+
+            for (int i = startIndex; i < period && period <= array.Length; i++)
             {
                 total += array[i];
             }
@@ -23,18 +40,18 @@ namespace TestPriceAlgorithm.Utils
             return total / period;
         }
 
-        public static double Tendence(DateTime endDatePeriod, int period, int periocType, List<DateTime> exportDateData,
-            List<int> exportSalesData)
+        public static double Tendence(DateTime endDatePeriod, int period, int periocType, DateTime[] exportDateData,
+           int[] exportSalesData)
         {
             //First Period
-            double mediaSales1 = Average(period, exportSalesData.ToArray(), exportSalesData.Count - 2 * period);
-            double mediaDates1 = Average(period, ExtraFunctions.ConvertDateToDouble(exportDateData.ToArray()),
-                exportDateData.Count - 2 * period);
+            double mediaSales1 = Average(period, exportSalesData.Select(x => (double)x).ToArray(), exportSalesData.Length - 2 * period);
+            double mediaDates1 = Average(period, ExtraFunctions.ConvertDateToDouble(exportDateData),
+                exportDateData.Length - 2 * period);
 
             //Second Period
-            double mediaSales2 = Average(period, exportSalesData.ToArray(), exportSalesData.Count - 1 - period);
-            double mediaDates2 = Average(period, ExtraFunctions.ConvertDateToDouble(exportDateData.ToArray()),
-                exportDateData.Count - 1 - period);
+            double mediaSales2 = Average(period, exportSalesData.Select(x => (double)x).ToArray(), exportSalesData.Length - 1 - period);
+            double mediaDates2 = Average(period, ExtraFunctions.ConvertDateToDouble(exportDateData),
+                exportDateData.Length - 1 - period);
 
             double currentPeriod = ExtraFunctions.DateToMin(endDatePeriod);
 
@@ -45,8 +62,8 @@ namespace TestPriceAlgorithm.Utils
             double changeAmount, double maxPrice, double minPrice)
         {
             double newPrice = currentPrice,
-                   tendence0 = Tendence(exportDateData.ToArray()[exportDateData.Count - period], period, 0, exportDateData, exportSalesData),
-                   tendence1 = Tendence(exportDateData.ToArray()[exportDateData.Count - 1], period, 0, exportDateData, exportSalesData);
+                   tendence0 = Tendence(exportDateData.ToArray()[exportDateData.Count - period], period, 0, exportDateData.ToArray(), exportSalesData.ToArray()),
+                   tendence1 = Tendence(exportDateData.ToArray()[exportDateData.Count - 1], period, 0, exportDateData.ToArray(), exportSalesData.ToArray());
 
             if (tendence0 <= tendence1 && maxPrice >= newPrice + changeAmount)
             {
@@ -57,6 +74,31 @@ namespace TestPriceAlgorithm.Utils
             {
                 //Negative number of sales => Decrease value
                 newPrice -= changeAmount;
+            }
+
+            return newPrice;
+        }
+
+        public static double GetNewPrice(double currentPrice, int period, int periocType, Game game,
+           double changeAmount, double maxPrice, double minPrice)
+        {
+            double newPrice = currentPrice;
+
+            if (game.saleByDate.Count >= period)
+            {
+                double tendence0 = Tendence(game.GetDateFrom()[game.saleByDate.Count - period], period, 0, game.GetDateFrom(), game.GetSalesFrom()),
+                   tendence1 = Tendence(game.GetDateFrom()[game.saleByDate.Count - 1], period, 0, game.GetDateFrom(), game.GetSalesFrom());
+
+                if (tendence0 <= tendence1 && maxPrice >= newPrice + changeAmount)
+                {
+                    //Positive number of sales => Increase value
+                    newPrice += changeAmount;
+                }
+                else if (minPrice <= newPrice - changeAmount)
+                {
+                    //Negative number of sales => Decrease value
+                    newPrice -= changeAmount;
+                }
             }
 
             return newPrice;
@@ -79,6 +121,28 @@ namespace TestPriceAlgorithm.Utils
             }
 
             return newSales;
+        }
+
+        public static int CalculateSales(List<BuyerFactory> buyers, Game game)
+        {
+            int sale = 0;
+            double tendence0 = 0,
+                   tendence1 = 0;
+
+            if (game.saleByDate.Count >= game.period) {
+                tendence0 = Tendence(game.GetDateFrom()[game.saleByDate.Count - game.period], game.period, 0, game.GetDateFrom(), game.GetSalesFrom());
+                tendence1 = Tendence(game.GetDateFrom()[game.saleByDate.Count - 1], game.period, 0, game.GetDateFrom(), game.GetSalesFrom());
+            }
+
+            foreach (BuyerFactory buyer in buyers)
+            {
+                if (buyer.PercentajeOfBuy(game, tendence0, tendence1))
+                {
+                    sale++;
+                }
+            }
+
+            return sale;
         }
     }
 }

@@ -66,13 +66,13 @@ namespace TestPriceAlgorithm
             this.groupBoxRealData = new System.Windows.Forms.GroupBox();
             this.btnGraphReal = new System.Windows.Forms.Button();
             this.groupBoxExtraConf = new System.Windows.Forms.GroupBox();
-            this.textBoxExtraStartPeriod = new System.Windows.Forms.TextBox();
+            this.txtExtraStartPeriod = new System.Windows.Forms.TextBox();
             this.labelExtraStartPeriod = new System.Windows.Forms.Label();
             this.cbExtraPeriodType = new System.Windows.Forms.ComboBox();
             this.labelInfoExtraConfig = new System.Windows.Forms.Label();
-            this.tbExtraPeriod = new System.Windows.Forms.TextBox();
+            this.txtExtraPeriod = new System.Windows.Forms.TextBox();
             this.labelExtraPeriod = new System.Windows.Forms.Label();
-            this.textBoxExtraChangePercentage = new System.Windows.Forms.TextBox();
+            this.txtChangePercentage = new System.Windows.Forms.TextBox();
             this.labelExtraChangePercentage = new System.Windows.Forms.Label();
             this.txtSingleValue = new System.Windows.Forms.TextBox();
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
@@ -84,6 +84,22 @@ namespace TestPriceAlgorithm
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.CalculateBenefits = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.gtNormalBuyers = new System.Windows.Forms.GroupBox();
+            this.txtMonths = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.txtAgressiveBuyers = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.txtCompulsiveBuyers = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.txtOcaassionalBuyers = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtNumbBuyers = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.txtCautiousBuyers = new System.Windows.Forms.TextBox();
+            this.txtNormalBuyers = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.btnSimulate = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).BeginInit();
             this.bindingNavigator1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.periodTypeBindingSource)).BeginInit();
@@ -93,6 +109,8 @@ namespace TestPriceAlgorithm
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.periodDataBindingSource)).BeginInit();
             this.groupBox1.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.gtNormalBuyers.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnImportCsv
@@ -116,7 +134,7 @@ namespace TestPriceAlgorithm
             // 
             // singleValue
             // 
-            this.singleValue.Location = new System.Drawing.Point(537, 359);
+            this.singleValue.Location = new System.Drawing.Point(67, 397);
             this.singleValue.Name = "singleValue";
             this.singleValue.Size = new System.Drawing.Size(75, 23);
             this.singleValue.TabIndex = 2;
@@ -126,7 +144,7 @@ namespace TestPriceAlgorithm
             // 
             // buttonExport
             // 
-            this.buttonExport.Location = new System.Drawing.Point(416, 424);
+            this.buttonExport.Location = new System.Drawing.Point(1006, 60);
             this.buttonExport.Name = "buttonExport";
             this.buttonExport.Size = new System.Drawing.Size(75, 23);
             this.buttonExport.TabIndex = 3;
@@ -136,7 +154,7 @@ namespace TestPriceAlgorithm
             // 
             // buttonGraph
             // 
-            this.buttonGraph.Location = new System.Drawing.Point(525, 424);
+            this.buttonGraph.Location = new System.Drawing.Point(1006, 99);
             this.buttonGraph.Name = "buttonGraph";
             this.buttonGraph.Size = new System.Drawing.Size(75, 23);
             this.buttonGraph.TabIndex = 4;
@@ -248,7 +266,7 @@ namespace TestPriceAlgorithm
             this.bindingNavigator1.MovePreviousItem = this.bindingNavigatorMovePreviousItem;
             this.bindingNavigator1.Name = "bindingNavigator1";
             this.bindingNavigator1.PositionItem = this.bindingNavigatorPositionItem;
-            this.bindingNavigator1.Size = new System.Drawing.Size(1135, 25);
+            this.bindingNavigator1.Size = new System.Drawing.Size(1128, 25);
             this.bindingNavigator1.TabIndex = 15;
             this.bindingNavigator1.Text = "bindingNavigator1";
             // 
@@ -363,7 +381,7 @@ namespace TestPriceAlgorithm
             this.groupBoxAlgorithmConf.Controls.Add(this.txtChangeAmount);
             this.groupBoxAlgorithmConf.Controls.Add(this.labelMinPrice);
             this.groupBoxAlgorithmConf.Controls.Add(this.labelChangeAmount);
-            this.groupBoxAlgorithmConf.Location = new System.Drawing.Point(30, 194);
+            this.groupBoxAlgorithmConf.Location = new System.Drawing.Point(39, 22);
             this.groupBoxAlgorithmConf.Name = "groupBoxAlgorithmConf";
             this.groupBoxAlgorithmConf.Size = new System.Drawing.Size(452, 208);
             this.groupBoxAlgorithmConf.TabIndex = 17;
@@ -386,7 +404,7 @@ namespace TestPriceAlgorithm
             this.groupBoxRealData.Controls.Add(this.btnGraphReal);
             this.groupBoxRealData.Controls.Add(this.btnImportCsv);
             this.groupBoxRealData.Controls.Add(this.csvFileName);
-            this.groupBoxRealData.Location = new System.Drawing.Point(30, 56);
+            this.groupBoxRealData.Location = new System.Drawing.Point(523, 244);
             this.groupBoxRealData.Name = "groupBoxRealData";
             this.groupBoxRealData.Size = new System.Drawing.Size(452, 97);
             this.groupBoxRealData.TabIndex = 18;
@@ -405,28 +423,29 @@ namespace TestPriceAlgorithm
             // 
             // groupBoxExtraConf
             // 
-            this.groupBoxExtraConf.Controls.Add(this.textBoxExtraStartPeriod);
+            this.groupBoxExtraConf.Controls.Add(this.txtExtraStartPeriod);
             this.groupBoxExtraConf.Controls.Add(this.labelExtraStartPeriod);
             this.groupBoxExtraConf.Controls.Add(this.cbExtraPeriodType);
             this.groupBoxExtraConf.Controls.Add(this.labelInfoExtraConfig);
-            this.groupBoxExtraConf.Controls.Add(this.tbExtraPeriod);
+            this.groupBoxExtraConf.Controls.Add(this.txtExtraPeriod);
             this.groupBoxExtraConf.Controls.Add(this.labelExtraPeriod);
-            this.groupBoxExtraConf.Controls.Add(this.textBoxExtraChangePercentage);
+            this.groupBoxExtraConf.Controls.Add(this.txtChangePercentage);
             this.groupBoxExtraConf.Controls.Add(this.labelExtraChangePercentage);
-            this.groupBoxExtraConf.Location = new System.Drawing.Point(502, 194);
+            this.groupBoxExtraConf.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.groupBoxExtraConf.Location = new System.Drawing.Point(39, 244);
             this.groupBoxExtraConf.Name = "groupBoxExtraConf";
-            this.groupBoxExtraConf.Size = new System.Drawing.Size(441, 146);
+            this.groupBoxExtraConf.Size = new System.Drawing.Size(452, 146);
             this.groupBoxExtraConf.TabIndex = 18;
             this.groupBoxExtraConf.TabStop = false;
             this.groupBoxExtraConf.Text = "Algorithm extra configuration";
-            this.groupBoxExtraConf.Visible = false;
             // 
-            // textBoxExtraStartPeriod
+            // txtExtraStartPeriod
             // 
-            this.textBoxExtraStartPeriod.Location = new System.Drawing.Point(180, 103);
-            this.textBoxExtraStartPeriod.Name = "textBoxExtraStartPeriod";
-            this.textBoxExtraStartPeriod.Size = new System.Drawing.Size(52, 20);
-            this.textBoxExtraStartPeriod.TabIndex = 18;
+            this.txtExtraStartPeriod.Enabled = false;
+            this.txtExtraStartPeriod.Location = new System.Drawing.Point(180, 103);
+            this.txtExtraStartPeriod.Name = "txtExtraStartPeriod";
+            this.txtExtraStartPeriod.Size = new System.Drawing.Size(52, 20);
+            this.txtExtraStartPeriod.TabIndex = 18;
             // 
             // labelExtraStartPeriod
             // 
@@ -439,6 +458,7 @@ namespace TestPriceAlgorithm
             // 
             // cbExtraPeriodType
             // 
+            this.cbExtraPeriodType.Enabled = false;
             this.cbExtraPeriodType.FormattingEnabled = true;
             this.cbExtraPeriodType.Items.AddRange(new object[] {
             "Seconds",
@@ -460,12 +480,14 @@ namespace TestPriceAlgorithm
             this.labelInfoExtraConfig.TabIndex = 5;
             this.labelInfoExtraConfig.Text = "Change the prices in case the sales are very unexpective";
             // 
-            // tbExtraPeriod
+            // txtExtraPeriod
             // 
-            this.tbExtraPeriod.Location = new System.Drawing.Point(146, 77);
-            this.tbExtraPeriod.Name = "tbExtraPeriod";
-            this.tbExtraPeriod.Size = new System.Drawing.Size(52, 20);
-            this.tbExtraPeriod.TabIndex = 14;
+            this.txtExtraPeriod.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtExtraPeriod.Enabled = false;
+            this.txtExtraPeriod.Location = new System.Drawing.Point(146, 77);
+            this.txtExtraPeriod.Name = "txtExtraPeriod";
+            this.txtExtraPeriod.Size = new System.Drawing.Size(52, 20);
+            this.txtExtraPeriod.TabIndex = 14;
             // 
             // labelExtraPeriod
             // 
@@ -476,12 +498,13 @@ namespace TestPriceAlgorithm
             this.labelExtraPeriod.TabIndex = 13;
             this.labelExtraPeriod.Text = "Period:";
             // 
-            // textBoxExtraChangePercentage
+            // txtChangePercentage
             // 
-            this.textBoxExtraChangePercentage.Location = new System.Drawing.Point(146, 51);
-            this.textBoxExtraChangePercentage.Name = "textBoxExtraChangePercentage";
-            this.textBoxExtraChangePercentage.Size = new System.Drawing.Size(279, 20);
-            this.textBoxExtraChangePercentage.TabIndex = 12;
+            this.txtChangePercentage.Enabled = false;
+            this.txtChangePercentage.Location = new System.Drawing.Point(146, 51);
+            this.txtChangePercentage.Name = "txtChangePercentage";
+            this.txtChangePercentage.Size = new System.Drawing.Size(279, 20);
+            this.txtChangePercentage.TabIndex = 12;
             // 
             // labelExtraChangePercentage
             // 
@@ -494,7 +517,7 @@ namespace TestPriceAlgorithm
             // 
             // txtSingleValue
             // 
-            this.txtSingleValue.Location = new System.Drawing.Point(646, 361);
+            this.txtSingleValue.Location = new System.Drawing.Point(185, 399);
             this.txtSingleValue.Name = "txtSingleValue";
             this.txtSingleValue.ReadOnly = true;
             this.txtSingleValue.Size = new System.Drawing.Size(279, 20);
@@ -547,7 +570,7 @@ namespace TestPriceAlgorithm
             this.groupBox1.Controls.Add(this.txtBenefitsReal);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Location = new System.Drawing.Point(502, 56);
+            this.groupBox1.Location = new System.Drawing.Point(523, 355);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(452, 97);
             this.groupBox1.TabIndex = 20;
@@ -566,25 +589,172 @@ namespace TestPriceAlgorithm
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btnSimulate);
+            this.panel1.Controls.Add(this.gtNormalBuyers);
+            this.panel1.Controls.Add(this.groupBoxAlgorithmConf);
+            this.panel1.Controls.Add(this.buttonGraph);
+            this.panel1.Controls.Add(this.groupBoxRealData);
+            this.panel1.Controls.Add(this.buttonExport);
+            this.panel1.Controls.Add(this.txtSingleValue);
+            this.panel1.Controls.Add(this.groupBox1);
+            this.panel1.Controls.Add(this.groupBoxExtraConf);
+            this.panel1.Controls.Add(this.singleValue);
             this.panel1.Location = new System.Drawing.Point(0, 28);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1135, 435);
+            this.panel1.Size = new System.Drawing.Size(1116, 583);
             this.panel1.TabIndex = 22;
+            // 
+            // gtNormalBuyers
+            // 
+            this.gtNormalBuyers.Controls.Add(this.txtMonths);
+            this.gtNormalBuyers.Controls.Add(this.label9);
+            this.gtNormalBuyers.Controls.Add(this.txtAgressiveBuyers);
+            this.gtNormalBuyers.Controls.Add(this.label8);
+            this.gtNormalBuyers.Controls.Add(this.txtCompulsiveBuyers);
+            this.gtNormalBuyers.Controls.Add(this.label5);
+            this.gtNormalBuyers.Controls.Add(this.txtOcaassionalBuyers);
+            this.gtNormalBuyers.Controls.Add(this.label3);
+            this.gtNormalBuyers.Controls.Add(this.txtNumbBuyers);
+            this.gtNormalBuyers.Controls.Add(this.label4);
+            this.gtNormalBuyers.Controls.Add(this.txtCautiousBuyers);
+            this.gtNormalBuyers.Controls.Add(this.txtNormalBuyers);
+            this.gtNormalBuyers.Controls.Add(this.label6);
+            this.gtNormalBuyers.Controls.Add(this.label7);
+            this.gtNormalBuyers.Location = new System.Drawing.Point(523, 22);
+            this.gtNormalBuyers.Name = "gtNormalBuyers";
+            this.gtNormalBuyers.Size = new System.Drawing.Size(452, 208);
+            this.gtNormalBuyers.TabIndex = 18;
+            this.gtNormalBuyers.TabStop = false;
+            this.gtNormalBuyers.Text = "Posible buyer configuration";
+            // 
+            // txtMonths
+            // 
+            this.txtMonths.Location = new System.Drawing.Point(146, 178);
+            this.txtMonths.Name = "txtMonths";
+            this.txtMonths.Size = new System.Drawing.Size(279, 20);
+            this.txtMonths.TabIndex = 18;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(25, 181);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(98, 13);
+            this.label9.TabIndex = 17;
+            this.label9.Text = "Months to simulate:";
+            // 
+            // txtAgressiveBuyers
+            // 
+            this.txtAgressiveBuyers.Location = new System.Drawing.Point(146, 152);
+            this.txtAgressiveBuyers.Name = "txtAgressiveBuyers";
+            this.txtAgressiveBuyers.Size = new System.Drawing.Size(279, 20);
+            this.txtAgressiveBuyers.TabIndex = 16;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(25, 155);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(104, 13);
+            this.label8.TabIndex = 15;
+            this.label8.Text = "%Aggressive buyers:";
+            // 
+            // txtCompulsiveBuyers
+            // 
+            this.txtCompulsiveBuyers.Location = new System.Drawing.Point(146, 126);
+            this.txtCompulsiveBuyers.Name = "txtCompulsiveBuyers";
+            this.txtCompulsiveBuyers.Size = new System.Drawing.Size(279, 20);
+            this.txtCompulsiveBuyers.TabIndex = 14;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(25, 129);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(106, 13);
+            this.label5.TabIndex = 13;
+            this.label5.Text = "%Compulsive buyers:";
+            // 
+            // txtOcaassionalBuyers
+            // 
+            this.txtOcaassionalBuyers.Location = new System.Drawing.Point(146, 74);
+            this.txtOcaassionalBuyers.Name = "txtOcaassionalBuyers";
+            this.txtOcaassionalBuyers.Size = new System.Drawing.Size(279, 20);
+            this.txtOcaassionalBuyers.TabIndex = 10;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(25, 29);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(107, 13);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "Total Buyer:s per day";
+            // 
+            // txtNumbBuyers
+            // 
+            this.txtNumbBuyers.Location = new System.Drawing.Point(146, 22);
+            this.txtNumbBuyers.Name = "txtNumbBuyers";
+            this.txtNumbBuyers.Size = new System.Drawing.Size(279, 20);
+            this.txtNumbBuyers.TabIndex = 6;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(25, 51);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(93, 13);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "%Cautious buyers:";
+            // 
+            // txtCautiousBuyers
+            // 
+            this.txtCautiousBuyers.Location = new System.Drawing.Point(146, 48);
+            this.txtCautiousBuyers.Name = "txtCautiousBuyers";
+            this.txtCautiousBuyers.Size = new System.Drawing.Size(279, 20);
+            this.txtCautiousBuyers.TabIndex = 8;
+            // 
+            // txtNormalBuyers
+            // 
+            this.txtNormalBuyers.Location = new System.Drawing.Point(146, 100);
+            this.txtNormalBuyers.Name = "txtNormalBuyers";
+            this.txtNormalBuyers.Size = new System.Drawing.Size(279, 20);
+            this.txtNormalBuyers.TabIndex = 12;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(25, 77);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(102, 13);
+            this.label6.TabIndex = 9;
+            this.label6.Text = "%Occasional buyers";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(25, 103);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(85, 13);
+            this.label7.TabIndex = 11;
+            this.label7.Text = "%Normal buyers:";
+            // 
+            // btnSimulate
+            // 
+            this.btnSimulate.Location = new System.Drawing.Point(1006, 22);
+            this.btnSimulate.Name = "btnSimulate";
+            this.btnSimulate.Size = new System.Drawing.Size(75, 23);
+            this.btnSimulate.TabIndex = 21;
+            this.btnSimulate.Text = "Simulate";
+            this.btnSimulate.UseVisualStyleBackColor = true;
+            this.btnSimulate.Click += new System.EventHandler(this.btnSimulate_Click);
             // 
             // FormTestAlgorithm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1135, 466);
-            this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.txtSingleValue);
-            this.Controls.Add(this.groupBoxExtraConf);
-            this.Controls.Add(this.groupBoxRealData);
-            this.Controls.Add(this.groupBoxAlgorithmConf);
+            this.ClientSize = new System.Drawing.Size(1128, 612);
             this.Controls.Add(this.bindingNavigator1);
-            this.Controls.Add(this.buttonGraph);
-            this.Controls.Add(this.buttonExport);
-            this.Controls.Add(this.singleValue);
             this.Controls.Add(this.panel1);
             this.Name = "FormTestAlgorithm";
             this.Text = "Inpuct info";
@@ -603,6 +773,10 @@ namespace TestPriceAlgorithm
             ((System.ComponentModel.ISupportInitialize)(this.periodDataBindingSource)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            this.gtNormalBuyers.ResumeLayout(false);
+            this.gtNormalBuyers.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -645,11 +819,11 @@ namespace TestPriceAlgorithm
         private System.Windows.Forms.GroupBox groupBoxExtraConf;
         private System.Windows.Forms.ComboBox cbExtraPeriodType;
         private System.Windows.Forms.Label labelInfoExtraConfig;
-        private System.Windows.Forms.TextBox tbExtraPeriod;
+        private System.Windows.Forms.TextBox txtExtraPeriod;
         private System.Windows.Forms.Label labelExtraPeriod;
-        private System.Windows.Forms.TextBox textBoxExtraChangePercentage;
+        private System.Windows.Forms.TextBox txtChangePercentage;
         private System.Windows.Forms.Label labelExtraChangePercentage;
-        private System.Windows.Forms.TextBox textBoxExtraStartPeriod;
+        private System.Windows.Forms.TextBox txtExtraStartPeriod;
         private System.Windows.Forms.Label labelExtraStartPeriod;
         private System.Windows.Forms.TextBox txtSingleValue;
         private System.IO.FileSystemWatcher fileSystemWatcher1;
@@ -662,6 +836,22 @@ namespace TestPriceAlgorithm
         private System.Windows.Forms.Button CalculateBenefits;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.BindingSource periodTypeBindingSource;
+        private System.Windows.Forms.GroupBox gtNormalBuyers;
+        private System.Windows.Forms.TextBox txtOcaassionalBuyers;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox txtNumbBuyers;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox txtCautiousBuyers;
+        private System.Windows.Forms.TextBox txtNormalBuyers;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox txtAgressiveBuyers;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox txtCompulsiveBuyers;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox txtMonths;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Button btnSimulate;
     }
 }
 

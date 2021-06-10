@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static TestPriceAlgorithm.FormTestAlgorithm;
 
 namespace TestPriceAlgorithm.Class
 {
-    public class Client
+    public abstract class Buyer
     {
-        public int id { get; set; }
-        public int kindBuyer { get; set; }
-        public bool gameBought { get; set; }
+        public abstract bool GameBought { get; set; }        
     }
 }

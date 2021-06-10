@@ -8,13 +8,18 @@ namespace TestPriceAlgorithm.Class
 {
     public class SaleGame
     {
-        //[Key]
-        public int idGame { get; set; }
         public int sales { get; set; }
         public DateTime date { get; set; }
         public double price { get; set; }
+        public double tendence { get; set; }
 
-        public Game Game { get; set; }
-        public Client Client { get; set; }
+        public SaleGame() { }
+
+        public SaleGame(int sales, DateTime date, double price)
+        {
+            this.sales = sales;
+            this.date = date;
+            this.price = price;
+        }
     }
 }

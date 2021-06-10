@@ -42,16 +42,16 @@ namespace TestPriceAlgorithm.Utils
             return ok;
         }
 
-        public static int DateToMin(DateTime datetime)
+        public static double DateToMin(DateTime datetime)
         {
             return (datetime.Year * 60 * 24 * 365) +
                 (datetime.Month * 60 * 24 * 365 / 12) +
                 (datetime.Day * 60 * 24);
         }
 
-        public static int[] ConvertDateToDouble(DateTime[] datetimes)
+        public static double[] ConvertDateToDouble(DateTime[] datetimes)
         {
-            int[] aux = new int[datetimes.Length];
+            double[] aux = new double[datetimes.Length];
 
             for (int i = 0; i < datetimes.Length; i++)
             {
