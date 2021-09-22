@@ -9,6 +9,8 @@ namespace TestPriceAlgorithm.Class
 {
     public abstract class Buyer
     {
-        public abstract bool GameBought { get; set; }        
+        public abstract bool GameBought { get; set; }
+        public abstract DateTime DateBuy { get; set; }
+        public abstract DateTime DateAppear { get; set; }
     }
 }

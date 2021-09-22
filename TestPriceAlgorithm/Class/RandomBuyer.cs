@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 
 namespace TestPriceAlgorithm.Class
 {
-    public class AggressiveBuyer : Buyer
+    public class RandomBuyer: Buyer
     {
         public override bool GameBought { get; set; }
         public override DateTime DateBuy { get; set; }
         public override DateTime DateAppear { get; set; }
 
-        public AggressiveBuyer() : base()
+        public RandomBuyer() : base()
         {
             GameBought = false;
         }
 
-        public AggressiveBuyer(DateTime date) : base()
+        public RandomBuyer(DateTime date) : base()
         {
             DateAppear = date;
         }

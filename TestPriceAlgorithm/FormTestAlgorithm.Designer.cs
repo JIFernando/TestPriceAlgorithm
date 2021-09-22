@@ -84,7 +84,10 @@ namespace TestPriceAlgorithm
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.CalculateBenefits = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnSimulate = new System.Windows.Forms.Button();
             this.gtNormalBuyers = new System.Windows.Forms.GroupBox();
+            this.txtRandomBuyers = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
             this.txtMonths = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.txtAgressiveBuyers = new System.Windows.Forms.TextBox();
@@ -99,7 +102,6 @@ namespace TestPriceAlgorithm
             this.txtNormalBuyers = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.btnSimulate = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).BeginInit();
             this.bindingNavigator1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.periodTypeBindingSource)).BeginInit();
@@ -404,7 +406,7 @@ namespace TestPriceAlgorithm
             this.groupBoxRealData.Controls.Add(this.btnGraphReal);
             this.groupBoxRealData.Controls.Add(this.btnImportCsv);
             this.groupBoxRealData.Controls.Add(this.csvFileName);
-            this.groupBoxRealData.Location = new System.Drawing.Point(523, 244);
+            this.groupBoxRealData.Location = new System.Drawing.Point(523, 267);
             this.groupBoxRealData.Name = "groupBoxRealData";
             this.groupBoxRealData.Size = new System.Drawing.Size(452, 97);
             this.groupBoxRealData.TabIndex = 18;
@@ -570,7 +572,7 @@ namespace TestPriceAlgorithm
             this.groupBox1.Controls.Add(this.txtBenefitsReal);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Location = new System.Drawing.Point(523, 355);
+            this.groupBox1.Location = new System.Drawing.Point(523, 378);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(452, 97);
             this.groupBox1.TabIndex = 20;
@@ -604,8 +606,20 @@ namespace TestPriceAlgorithm
             this.panel1.Size = new System.Drawing.Size(1116, 583);
             this.panel1.TabIndex = 22;
             // 
+            // btnSimulate
+            // 
+            this.btnSimulate.Location = new System.Drawing.Point(1006, 22);
+            this.btnSimulate.Name = "btnSimulate";
+            this.btnSimulate.Size = new System.Drawing.Size(75, 23);
+            this.btnSimulate.TabIndex = 21;
+            this.btnSimulate.Text = "Simulate";
+            this.btnSimulate.UseVisualStyleBackColor = true;
+            this.btnSimulate.Click += new System.EventHandler(this.btnSimulate_Click);
+            // 
             // gtNormalBuyers
             // 
+            this.gtNormalBuyers.Controls.Add(this.txtRandomBuyers);
+            this.gtNormalBuyers.Controls.Add(this.label10);
             this.gtNormalBuyers.Controls.Add(this.txtMonths);
             this.gtNormalBuyers.Controls.Add(this.label9);
             this.gtNormalBuyers.Controls.Add(this.txtAgressiveBuyers);
@@ -622,14 +636,30 @@ namespace TestPriceAlgorithm
             this.gtNormalBuyers.Controls.Add(this.label7);
             this.gtNormalBuyers.Location = new System.Drawing.Point(523, 22);
             this.gtNormalBuyers.Name = "gtNormalBuyers";
-            this.gtNormalBuyers.Size = new System.Drawing.Size(452, 208);
+            this.gtNormalBuyers.Size = new System.Drawing.Size(452, 239);
             this.gtNormalBuyers.TabIndex = 18;
             this.gtNormalBuyers.TabStop = false;
             this.gtNormalBuyers.Text = "Posible buyer configuration";
             // 
+            // txtRandomBuyers
+            // 
+            this.txtRandomBuyers.Location = new System.Drawing.Point(146, 178);
+            this.txtRandomBuyers.Name = "txtRandomBuyers";
+            this.txtRandomBuyers.Size = new System.Drawing.Size(279, 20);
+            this.txtRandomBuyers.TabIndex = 20;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(25, 181);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(93, 13);
+            this.label10.TabIndex = 19;
+            this.label10.Text = "%Random Buyers:";
+            // 
             // txtMonths
             // 
-            this.txtMonths.Location = new System.Drawing.Point(146, 178);
+            this.txtMonths.Location = new System.Drawing.Point(146, 205);
             this.txtMonths.Name = "txtMonths";
             this.txtMonths.Size = new System.Drawing.Size(279, 20);
             this.txtMonths.TabIndex = 18;
@@ -637,7 +667,7 @@ namespace TestPriceAlgorithm
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(25, 181);
+            this.label9.Location = new System.Drawing.Point(25, 208);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(98, 13);
             this.label9.TabIndex = 17;
@@ -739,16 +769,6 @@ namespace TestPriceAlgorithm
             this.label7.TabIndex = 11;
             this.label7.Text = "%Normal buyers:";
             // 
-            // btnSimulate
-            // 
-            this.btnSimulate.Location = new System.Drawing.Point(1006, 22);
-            this.btnSimulate.Name = "btnSimulate";
-            this.btnSimulate.Size = new System.Drawing.Size(75, 23);
-            this.btnSimulate.TabIndex = 21;
-            this.btnSimulate.Text = "Simulate";
-            this.btnSimulate.UseVisualStyleBackColor = true;
-            this.btnSimulate.Click += new System.EventHandler(this.btnSimulate_Click);
-            // 
             // FormTestAlgorithm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -757,7 +777,7 @@ namespace TestPriceAlgorithm
             this.Controls.Add(this.bindingNavigator1);
             this.Controls.Add(this.panel1);
             this.Name = "FormTestAlgorithm";
-            this.Text = "Inpuct info";
+            this.Text = "s";
             this.Load += new System.EventHandler(this.FormTestAlgorithm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).EndInit();
             this.bindingNavigator1.ResumeLayout(false);
@@ -852,6 +872,8 @@ namespace TestPriceAlgorithm
         private System.Windows.Forms.TextBox txtMonths;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Button btnSimulate;
+        private System.Windows.Forms.TextBox txtRandomBuyers;
+        private System.Windows.Forms.Label label10;
     }
 }
 

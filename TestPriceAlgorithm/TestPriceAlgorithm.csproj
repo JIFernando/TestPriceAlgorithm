@@ -70,6 +70,7 @@
     <Compile Include="Class\Buyer.cs" />
     <Compile Include="Class\CautiousBuyer.cs" />
     <Compile Include="Class\CompulsiveBuyer.cs" />
+    <Compile Include="Class\RandomBuyer.cs" />
     <Compile Include="Factory\AggressiveBuyerFactory.cs" />
     <Compile Include="Factory\BuyerFactory.cs" />
     <Compile Include="Class\Game.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="Factory\CompulsiveBuyerFactory.cs" />
     <Compile Include="Factory\NormalBuyerFactory.cs" />
     <Compile Include="Factory\OccasionalBuyerFactory.cs" />
+    <Compile Include="Factory\RandomBuyerFactory.cs" />
     <Compile Include="FileDataImport.cs" />
     <Compile Include="FormTestAlgorithm.cs">
       <SubType>Form</SubType>

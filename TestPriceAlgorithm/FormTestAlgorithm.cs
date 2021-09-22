@@ -11,17 +11,13 @@ using TestPriceAlgorithm.Class;
 using TestPriceAlgorithm.Factory;
 using TestPriceAlgorithm.Utils;
 using static TestPriceAlgorithm.Class.AggressiveBuyer;
+using static TestPriceAlgorithm.Class.BuyerFactory;
 using static TestPriceAlgorithm.Grahps;
 
 namespace TestPriceAlgorithm
 {
     public partial class FormTestAlgorithm : Form
     {
-        private readonly FileDialog _fileDialog = new OpenFileDialog();
-        private readonly FileDialog _openFileDialog = new OpenFileDialog();
-        private readonly Random _random = new Random();
-        private List<DateTime> _importDateData  = new List<DateTime>();
-        private List<int> _importSalesData = new List<int>();
         private List<DateTime> _exportDateData  = new List<DateTime>();
         private List<int> _exportSalesData = new List<int>();
         private List<double> _exportPriceData = new List<double>();
@@ -29,11 +25,11 @@ namespace TestPriceAlgorithm
         private List<int> _exportBaseSalesData = new List<int>();
         private List<double> _exportBasePriceData = new List<double>();
 
+        private List<BuyerFactory> buyers = new List<BuyerFactory>();
+
         public List<Game> games = new List<Game>();
         public Game mediaOfGames = new Game();
         public Game simulation = new Game();
-
-        public List<double> tendenceHistory = new List<double>();
         
         public enum PeriodType
         {
@@ -88,7 +84,6 @@ namespace TestPriceAlgorithm
             int columnSales = 0;
             int columnPrice = 0;
             Game game = null;
-            //DialogResult dr = this._openFileDialog.ShowDialog();
 
             OpenFileDialog dr = new OpenFileDialog();
 
@@ -149,7 +144,7 @@ namespace TestPriceAlgorithm
                                 }
 
                                 game.saleByDate.Add(new SaleGame(
-                                    int.Parse(columns[columnSales]),
+                                    (int)int.Parse(columns[columnSales])/1000,
                                     Convert.ToDateTime(columns[columnDate]), 
                                     double.Parse(columns[columnPrice])));
                                 
@@ -282,6 +277,11 @@ namespace TestPriceAlgorithm
 
         private void btnGraph_Click(object sender, EventArgs e)
         {
+            if (simulation == null || simulation.saleByDate.Count == 0)
+            {
+                DoSimulation();
+            }
+
             double cAmount = double.Parse(txtChangeAmount.Text);
             double maxPrice = double.Parse(txtMaxPrice.Text);
             double minPrice = double.Parse(txtMinPrice.Text);
@@ -298,26 +298,77 @@ namespace TestPriceAlgorithm
                 double[] y2 = simulation.GetSalesFromDouble();
                 double[] y3 = mediaOfGames.GetPricesFrom();
                 double[] y4 = simulation.GetPricesFrom();
+                double[] y5 = mediaOfGames.GetBenefitsFrom();
+                double[] y6 = simulation.GetBenefitsFrom();
+
+                //List<BuyerFactory> test = new List<BuyerFactory>();
+                //List<BuyerFactory> test1 = new List<BuyerFactory>();
+                //List<BuyerFactory> test2 = new List<BuyerFactory>();
+                //List<BuyerFactory> test3 = new List<BuyerFactory>();
+                //List<BuyerFactory> test4 = new List<BuyerFactory>();
+                //List<BuyerFactory> test5 = new List<BuyerFactory>();
+                //List<BuyerFactory> test6 = new List<BuyerFactory>();
+
+                //test = buyers.Where(t => t.GameAlreadyBuy() && t.GetBuyerType() == KindBuyer.Normal).ToList();
+                //test1 = buyers.Where(t => t.GameAlreadyBuy() && t.GetBuyerType() == KindBuyer.Aggressive).ToList();
+                //test2 = buyers.Where(t => t.GameAlreadyBuy() && t.GetBuyerType() == KindBuyer.Compulsive).ToList();
+                //test3 = buyers.Where(t => t.GameAlreadyBuy() && t.GetBuyerType() == KindBuyer.Occasional).ToList();
+                //test4 = buyers.Where(t => t.GameAlreadyBuy() && t.GetBuyerType() == KindBuyer.Cautious).ToList();
+                //test4 = buyers.Where(t => t.GameAlreadyBuy() && t.GetBuyerType() == KindBuyer.Random).ToList();
+                //test5 = buyers.Where(t => t.GameAlreadyBuy()).ToList();
+
+                double[] countAgg = ExtraFunctions.GetBuyersBy(buyers, x, typeof(AggressiveBuyerFactory));
+                double[] countCom = ExtraFunctions.GetBuyersBy(buyers, x, typeof(CompulsiveBuyerFactory));
+                double[] countNor = ExtraFunctions.GetBuyersBy(buyers, x, typeof(NormalBuyerFactory));
+                double[] countOcc = ExtraFunctions.GetBuyersBy(buyers, x, typeof(OccasionalBuyerFactory));
+                double[] countCau = ExtraFunctions.GetBuyersBy(buyers, x, typeof(CautiousBuyerFactory));
+                double[] countRan = ExtraFunctions.GetBuyersBy(buyers, x, typeof(RandomBuyerFactory));
 
                 List<Serie> series = new List<Serie>();
                 List<Serie> series2 = new List<Serie>();
+                List<Serie> series3 = new List<Serie>();
+                List<Serie> series5 = new List<Serie>();
+
                 if (mediaOfGames.saleByDate.Count != 0)
                 {
-                    series.Add(new Serie(Constancts.Serie2, x, y2));
-                    series2.Add(new Serie(Constancts.Serie4, x, y4));
+                    series.Add(new Serie(Constancts.Serie1, x, y));
+                    series2.Add(new Serie(Constancts.Serie3, x, y3));
+                    series5.Add(new Serie(Constancts.Serie5, x, y5));
                 }
 
                 if (simulation.saleByDate.Count != 0)
                 {
-                    series.Add(new Serie(Constancts.Serie1, x, y));
-                    series2.Add(new Serie(Constancts.Serie3, x, y3));
+                    series.Add(new Serie(Constancts.Serie2, x, y2));
+                    series2.Add(new Serie(Constancts.Serie4, x, y4));
+                    series5.Add(new Serie(Constancts.Serie6, x, y6));
+
+                    series3.Add(new Serie(Constancts.SerieAg, x, countAgg));
+                    series3.Add(new Serie(Constancts.SerieCo, x, countCom));
+                    series3.Add(new Serie(Constancts.SerieNo, x, countNor));
+                    series3.Add(new Serie(Constancts.SerieOc, x, countOcc));
+                    series3.Add(new Serie(Constancts.SerieCa, x, countCau));
+                    series3.Add(new Serie(Constancts.SerieRa, x, countRan));
                 }
-
-                Grahps grahps = new Grahps(Constancts.CompareTitule, series, x);
-                Grahps grahpsPrices = new Grahps(Constancts.ComparePricesTitule, series2, x);
-
-                grahps.ShowGrahpVaues();
-                grahpsPrices.ShowGrahpVaues();
+                if (series.Count > 0)
+                {
+                    Grahps grahps = new Grahps(Constancts.CompareTitule, series, x);
+                    grahps.ShowGrahpVaues();
+                }
+                if (series2.Count > 0)
+                {
+                    Grahps grahpsPrices = new Grahps(Constancts.ComparePricesTitule, series2, x);
+                    grahpsPrices.ShowGrahpVaues();
+                }
+                if (series3.Count > 0)
+                { 
+                    Grahps grahpsBuyers = new Grahps(Constancts.CompareBuyersTitule, series3, x);
+                    grahpsBuyers.ShowGrahpVaues();
+                }
+                if (series5.Count > 0)
+                {
+                    Grahps grahpsBenefits = new Grahps(Constancts.CompareBenefitsTitule, series5, x);
+                    grahpsBenefits.ShowGrahpVaues();
+                }
             }           
         }
         
@@ -330,6 +381,11 @@ namespace TestPriceAlgorithm
             }
             else
             {
+                if (simulation == null || simulation.saleByDate.Count == 0)
+                {
+                    DoSimulation();
+                }
+
                 /*
                 DateTime[] dates = _exportDateData.ToArray();
                 int[] sales = _exportSalesData.ToArray();
@@ -424,6 +480,11 @@ namespace TestPriceAlgorithm
 
         private void btnSimulate_Click(object sender, EventArgs e)
         {
+            DoSimulation();
+        }
+
+        private void DoSimulation()
+        {
             double cAmount = double.Parse(txtChangeAmount.Text);
             double maxPrice = double.Parse(txtMaxPrice.Text);
             double minPrice = double.Parse(txtMinPrice.Text);
@@ -435,48 +496,71 @@ namespace TestPriceAlgorithm
             DateTime date = DateTime.Today;
             int monthsToSim = int.Parse(txtMonths.Text);
 
-            List<BuyerFactory> buyers = GetBuyersConf();
+            simulation = new Game();
 
-            simulation = new Game(Constancts.SimulationName, date, basePrice, basePrice, period);            
+            buyers = GetBuyersConf(date);
 
-            for (int i = period; i < monthsToSim*30; i++)
+            //List<BuyerFactory> test = new List<BuyerFactory>();
+            //List<BuyerFactory> test1 = new List<BuyerFactory>();
+            //List<BuyerFactory> test2 = new List<BuyerFactory>();
+            //List<BuyerFactory> test3 = new List<BuyerFactory>();
+            //List<BuyerFactory> test4 = new List<BuyerFactory>();
+
+            simulation = new Game(Constancts.SimulationName, date, basePrice, basePrice, period);
+
+            for (int i = 0; i < monthsToSim * 30; i++)
             {
                 newPrice = AlgorithmFunctions.GetNewPrice(newPrice, period, periodType, simulation, cAmount, maxPrice, minPrice);
-                sales = AlgorithmFunctions.CalculateSales(buyers, simulation);
+                sales = AlgorithmFunctions.CalculateSales(buyers, simulation, date);
+                //test = buyers.Where(x => x.GameAlreadyBuy() && x.GetBuyerType() == KindBuyer.Normal).ToList();
+                //test1 = buyers.Where(x => x.GameAlreadyBuy() && x.GetBuyerType() == KindBuyer.Aggressive).ToList();
+                //test2 = buyers.Where(x => x.GameAlreadyBuy() && x.GetBuyerType() == KindBuyer.Compulsive).ToList();
+                //test3 = buyers.Where(x => x.GameAlreadyBuy() && x.GetBuyerType() == KindBuyer.Occasional).ToList();
+                //test4 = buyers.Where(x => x.GameAlreadyBuy() && x.GetBuyerType() == KindBuyer.Cautious).ToList();
                 simulation.saleByDate.Add(new SaleGame(sales, date, newPrice));
                 date = date.AddDays(1);
-                simulation.price = newPrice;                
+                simulation.price = newPrice;
+                buyers.AddRange(GetBuyersConf(date, i < 6));
             }
-            
         }
 
-        private List<BuyerFactory> GetBuyersConf()
+        private List<BuyerFactory> GetBuyersConf(DateTime date, bool first = true)
         {
-            int buyersPerDay = int.Parse(txtNumbBuyers.Text),
+            Random rnd = new Random();
+            int buyersPerDay = int.Parse(txtNumbBuyers.Text) + (int)(int.Parse(txtNumbBuyers.Text) * rnd.NextDouble()),
                 monthsToSim = int.Parse(txtMonths.Text);
-            double buyCautious = double.Parse(txtCautiousBuyers.Text),
-                buyOccasional = double.Parse(txtOcaassionalBuyers.Text),
-                buyNormal = double.Parse(txtNormalBuyers.Text),
-                buyCompulsive = double.Parse(txtCompulsiveBuyers.Text),
-                buyAggressive = double.Parse(txtAgressiveBuyers.Text);
+            double buyCautious = double.Parse(txtCautiousBuyers.Text)/100,
+                buyOccasional = double.Parse(txtOcaassionalBuyers.Text) / 100,
+                buyNormal = double.Parse(txtNormalBuyers.Text) / 100,
+                buyCompulsive = double.Parse(txtCompulsiveBuyers.Text) / 100,
+                buyAggressive = double.Parse(txtAgressiveBuyers.Text) / 100,
+                buyRandom = double.Parse(txtRandomBuyers.Text) / 100;
 
             List<BuyerFactory> buyers = new List<BuyerFactory>();
 
-            buyers.AddRange(CreateBuyers(BuyerFactory.KindBuyer.Cautious, GetTotalBuyers(buyCautious, buyersPerDay, monthsToSim)));
-            buyers.AddRange(CreateBuyers(BuyerFactory.KindBuyer.Occasional, GetTotalBuyers(buyOccasional, buyersPerDay, monthsToSim)));
-            buyers.AddRange(CreateBuyers(BuyerFactory.KindBuyer.Normal, GetTotalBuyers(buyNormal, buyersPerDay, monthsToSim)));
-            buyers.AddRange(CreateBuyers(BuyerFactory.KindBuyer.Compulsive, GetTotalBuyers(buyCompulsive, buyersPerDay, monthsToSim)));
-            buyers.AddRange(CreateBuyers(BuyerFactory.KindBuyer.Aggressive, GetTotalBuyers(buyAggressive, buyersPerDay, monthsToSim)));
+            buyers.AddRange(CreateBuyers(BuyerFactory.KindBuyer.Cautious, date, GetTotalBuyers(buyCautious, buyersPerDay, monthsToSim, first)));
+            buyers.AddRange(CreateBuyers(BuyerFactory.KindBuyer.Occasional, date, GetTotalBuyers(buyOccasional, buyersPerDay, monthsToSim, first)));
+            buyers.AddRange(CreateBuyers(BuyerFactory.KindBuyer.Normal, date, GetTotalBuyers(buyNormal, buyersPerDay, monthsToSim, first)));
+            buyers.AddRange(CreateBuyers(BuyerFactory.KindBuyer.Compulsive, date, GetTotalBuyers(buyCompulsive, buyersPerDay, monthsToSim, first)));
+            buyers.AddRange(CreateBuyers(BuyerFactory.KindBuyer.Aggressive, date, GetTotalBuyers(buyAggressive, buyersPerDay, monthsToSim, first)));
+            buyers.AddRange(CreateBuyers(BuyerFactory.KindBuyer.Random, date, GetTotalBuyers(buyRandom, buyersPerDay, monthsToSim, first)));
 
             return buyers;
         }
 
-        private int GetTotalBuyers(double percentaje, int byDay, int totalMonths)
+        private int GetTotalBuyers(double percentaje, int byDay, int totalMonths, bool first)
         {
-            return (int)(percentaje * totalMonths * 30 * byDay/100);
+            int buyersCount = (int)(percentaje * byDay);
+
+            if (first)
+            {
+                buyersCount = (int)(buyersCount * 5);
+            }
+
+            return buyersCount;
         }
 
-        private List<BuyerFactory> CreateBuyers(BuyerFactory.KindBuyer kind, int total)
+        private List<BuyerFactory> CreateBuyers(BuyerFactory.KindBuyer kind, DateTime date, int total)
         {
             List<BuyerFactory> buyers = new List<BuyerFactory>();
             for (int i = 0; i<total; i++)
@@ -484,19 +568,22 @@ namespace TestPriceAlgorithm
                 switch (kind)
                 {
                     case BuyerFactory.KindBuyer.Cautious:
-                        buyers.Add(new CautiousBuyerFactory());
+                        buyers.Add(new CautiousBuyerFactory(date));
                         break;
                     case BuyerFactory.KindBuyer.Occasional:
-                        buyers.Add(new OccasionalBuyerFactory());
+                        buyers.Add(new OccasionalBuyerFactory(date));
                         break;
                     case BuyerFactory.KindBuyer.Normal:
-                        buyers.Add(new NormalBuyerFactory());
+                        buyers.Add(new NormalBuyerFactory(date));
                         break;
                     case BuyerFactory.KindBuyer.Compulsive:
-                        buyers.Add(new CompulsiveBuyerFactory());
+                        buyers.Add(new CompulsiveBuyerFactory(date));
                         break;
                     case BuyerFactory.KindBuyer.Aggressive:
-                        buyers.Add(new AggressiveBuyerFactory());
+                        buyers.Add(new AggressiveBuyerFactory(date));
+                        break;
+                    case BuyerFactory.KindBuyer.Random:
+                        buyers.Add(new RandomBuyerFactory(date));
                         break;
                 }          
             }
@@ -513,12 +600,13 @@ namespace TestPriceAlgorithm
             txtBasePrice.Text = "20";
             txtMonths.Text = "6";
 
-            txtNumbBuyers.Text = "50000";
+            txtNumbBuyers.Text = "30";
             txtCautiousBuyers.Text = "20";
             txtOcaassionalBuyers.Text = "10";
             txtNormalBuyers.Text = "40";
             txtCompulsiveBuyers.Text = "15";
-            txtAgressiveBuyers.Text = "15";
+            txtAgressiveBuyers.Text = "10";
+            txtRandomBuyers.Text = "5";
         }
     }
 }

@@ -15,13 +15,23 @@ namespace TestPriceAlgorithm.Class
         */
 
         public bool gameBought { get; set; }
+        public DateTime dateBuy { get; set; }
+        public DateTime dateAppear { get; set; }
+        private Random rnd = new Random();
 
-        public AggressiveBuyerFactory() : base()
+        public AggressiveBuyerFactory() : base() { }
+
+        public AggressiveBuyerFactory(DateTime date) : base()
         {
-
+            dateAppear = date;
         }
 
-        public override bool PercentajeOfBuy(Game game, double tendence1, double tendence2)
+        public override bool GameAlreadyBuy()
+        {
+            return gameBought;
+        }
+
+        public override bool PercentajeOfBuy(Game game, double tendence1, double tendence2, DateTime dateTime)
         {
             bool willBuy = false;
 
@@ -34,17 +44,33 @@ namespace TestPriceAlgorithm.Class
                     //Increase the price of the game temor que siga subiendo
                     willBuy = true;
                 }
-                else if (tendence < 0.5 && tendence > -0.1)
+                else if (tendence < 0.5 && tendence > -0.1 && (dateTime - dateAppear).TotalDays < 14)
                 {
-                    //La tendencia esta mas o menos igual 
-                    //we can try do reduce the price of the game to increase the number of buyer of the game
-                    willBuy = rnd.Next() <= Constancts.HighCautiousPercentaje;
+                    if ((dateTime - dateAppear).TotalDays < 14)
+                    {
+                        //La tendencia esta mas o menos igual 
+                        //we can try do reduce the price of the game to increase the number of buyer of the game
+                        willBuy = rnd.NextDouble() <= 0.9;
+                    }
+                    else
+                    {
+                        //La tendencia esta mas o menos igual 
+                        //we can try do reduce the price of the game to increase the number of buyer of the game
+                        willBuy = rnd.Next(0, 1) <= 0.3;
+                    }
                 }
                 else
                 {
                     //Reduce the price of the game to increase the number oif buyer of the game
-                    willBuy = rnd.Next() <= Constancts.HighOcasionalPercentaje;
+                    willBuy = rnd.Next(0, 1) <= Constancts.HighOcasionalPercentaje;
                 }
+
+                gameBought = willBuy;
+            }
+
+            if (willBuy)
+            {
+                this.dateBuy = dateTime;
             }
 
             return willBuy;
@@ -53,6 +79,21 @@ namespace TestPriceAlgorithm.Class
         public override Buyer GetBuyer()
         {
             return new AggressiveBuyer();
+        }
+
+        public override DateTime GetDateBuy()
+        {
+            return dateBuy;
+        }
+
+        public override KindBuyer GetBuyerType()
+        {
+            return KindBuyer.Aggressive;
+        }
+        
+        public override DateTime DateAppear()
+        {
+            return dateAppear;
         }
     }
 }

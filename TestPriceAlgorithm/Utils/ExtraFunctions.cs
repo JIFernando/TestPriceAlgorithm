@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TestPriceAlgorithm.Class;
 
 namespace TestPriceAlgorithm.Utils
 {
@@ -59,6 +60,28 @@ namespace TestPriceAlgorithm.Utils
             }
 
             return aux.ToArray();
+        }
+
+        public static double[] GetBuyersBy(List<BuyerFactory> buyers, DateTime[] dateTimes, Type type)
+        {
+            List<double> list = new List<double>();
+            double count = 0;
+
+            for (int i = 0; i<dateTimes.Length; i++)
+            {
+                foreach (BuyerFactory buyer in buyers)
+                {
+                    if (buyer.GetType() == type && dateTimes[i].Equals(buyer.GetDateBuy()))
+                    {
+                        count++;
+                    }
+                }
+
+                list.Add(count);
+                count = 0;
+            }
+
+            return list.ToArray();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -44,16 +45,32 @@ namespace TestPriceAlgorithm.Class
             return result.ToArray();
         }
 
-        public int[] GetSalesFrom()
+        public double[] GetBenefitsFrom()
         {
-            List<int> result = new List<int>();
+            List<double> result = new List<double>();
+            double total = 0;
 
             foreach (SaleGame sg in this.saleByDate)
             {
-                result.Add(sg.sales);
+                total += Math.Truncate((sg.price * sg.sales) / 1000);
+
+                result.Add(total);
             }
 
             return result.ToArray();
+        }
+
+        public int[] GetSalesFrom()
+        {
+            //List<int> result = new List<int>();
+
+            //foreach (SaleGame sg in this.saleByDate)
+            //{
+            //    result.Add(sg.sales);
+            //}
+            IList<SaleGame> aux = saleByDate.OrderBy(x => x.date).ToList();           
+
+            return aux.Select(x => x.sales).ToArray();
         }
 
         public double[] GetSalesFromDouble()
@@ -70,14 +87,7 @@ namespace TestPriceAlgorithm.Class
 
         public DateTime[] GetDateFrom()
         {
-            List<DateTime> result = new List<DateTime>();
-
-            foreach (SaleGame sg in this.saleByDate)
-            {
-                result.Add(sg.date);
-            }
-
-            return result.ToArray();
+            return this.saleByDate.Select(s => s.date).OrderBy(x => x).ToArray();
         }
     }
 }

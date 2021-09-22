@@ -9,9 +9,6 @@ namespace TestPriceAlgorithm.Utils
 {
     public static class AlgorithmFunctions
     {
-
-        private readonly static Random _random = new Random();
-
         public static DateTime AverageDateTime(List<DateTime> dates)
         {
             var count = dates.Count;
@@ -32,7 +29,7 @@ namespace TestPriceAlgorithm.Utils
                 startIndex = 0;
             }
 
-            for (int i = startIndex; i < period && period <= array.Length; i++)
+            for (int i = startIndex; i < startIndex + period && period <= array.Length; i++)
             {
                 total += array[i];
             }
@@ -103,27 +100,8 @@ namespace TestPriceAlgorithm.Utils
 
             return newPrice;
         }
-
-        //15% to 5%
-        public static int CalculateSales(double newPrice, int realSales, double priceBaseReal)
-        {
-            int newSales = 0;
-
-            if (newPrice > priceBaseReal)
-            {
-                //15% - de probablilidades de mas ventas y un 5% de mas que el real
-                newSales = Convert.ToInt32(_random.Next(85, 105) * realSales / 100);
-            }
-            else
-            {
-                //15% + de probablilidades de mas ventas y un 5% de menos que el real
-                newSales = Convert.ToInt32(_random.Next(95, 115) * realSales / 100);
-            }
-
-            return newSales;
-        }
-
-        public static int CalculateSales(List<BuyerFactory> buyers, Game game)
+        
+        public static int CalculateSales(List<BuyerFactory> buyers, Game game, DateTime dateTime)
         {
             int sale = 0;
             double tendence0 = 0,
@@ -136,7 +114,7 @@ namespace TestPriceAlgorithm.Utils
 
             foreach (BuyerFactory buyer in buyers)
             {
-                if (buyer.PercentajeOfBuy(game, tendence0, tendence1))
+                if (buyer.PercentajeOfBuy(game, tendence0, tendence1, dateTime))
                 {
                     sale++;
                 }
