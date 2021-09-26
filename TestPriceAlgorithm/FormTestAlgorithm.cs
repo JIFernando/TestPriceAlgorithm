@@ -527,7 +527,7 @@ namespace TestPriceAlgorithm
         private List<BuyerFactory> GetBuyersConf(DateTime date, bool first = true)
         {
             Random rnd = new Random();
-            int buyersPerDay = int.Parse(txtNumbBuyers.Text) + (int)(int.Parse(txtNumbBuyers.Text) * rnd.NextDouble()),
+            int buyersPerDay = (int)(int.Parse(txtNumbBuyers.Text) * rnd.NextDouble()),
                 monthsToSim = int.Parse(txtMonths.Text);
             double buyCautious = double.Parse(txtCautiousBuyers.Text)/100,
                 buyOccasional = double.Parse(txtOcaassionalBuyers.Text) / 100,
